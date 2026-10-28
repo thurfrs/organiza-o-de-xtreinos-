@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100b19"><title>ORGANIZAÇÃO DE XTREINOS — Login do Organizador</title>
+<style>
+:root{color-scheme:dark;--bg:#100b19;--panel:#1c1428;--line:#3c2a52;--purple:#925cff;--text:#f8f5ff;--muted:#c3b8d3;--red:#b83255}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#211332 0,#100b19 280px);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}header{padding:24px 16px 18px;text-align:center;border-bottom:1px solid var(--line)}h1{font-size:30px;letter-spacing:2px;margin:0}header p{color:var(--muted);margin:4px 0 0}.watermark{font-size:13px;font-weight:600;letter-spacing:1.5px;color:var(--muted);opacity:.75;margin-top:4px}main{width:min(900px,100%);margin:auto;padding:14px}.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:14px}.tabs button{padding:13px 8px}section,.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}h2{font-size:20px;margin:0 0 12px}h3{font-size:17px;margin:14px 0 8px}label{display:block;color:var(--muted);font-size:14px;margin:10px 0 5px}input,select,button{width:100%;min-height:46px;border-radius:10px;border:1px solid #58416f;padding:11px 12px;font:inherit;color:var(--text);background:#120d1b}button{border:0;background:var(--purple);font-weight:700;cursor:pointer;touch-action:manipulation}button.secondary{background:#39284c}button.danger{background:var(--red)}button:disabled{opacity:.55}.formrow{display:grid;grid-template-columns:1fr;gap:8px}.hidden{display:none!important}.muted{color:var(--muted)}.message{padding:10px;border-radius:10px;background:#2b2040;margin-top:10px;white-space:pre-wrap}.item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.queda-bar{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.queda-bar button{width:auto;min-height:38px;padding:7px 12px}.team-info{min-width:0;flex:1}.team-players{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}.team-btns{display:flex;gap:6px;flex-shrink:0}.item button{width:auto;min-width:72px;min-height:38px;padding:7px 10px}.tablewrap{overflow-x:auto;width:100%}table{border-collapse:collapse;width:100%;min-width:400px;font-size:14px}
+/* MVP visual premium */
+#mvpRanking .mvp-board{display:grid;gap:10px;margin-top:14px}
+#mvpRanking .mvp-card{display:grid;grid-template-columns:54px minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px;border:1px solid #49315e;border-radius:14px;background:linear-gradient(110deg,#251631,#130e1c);box-shadow:0 8px 20px #0002}
+#mvpRanking .mvp-card:first-child{border-color:#e8b944;background:linear-gradient(110deg,#493312,#1c1424);box-shadow:0 0 0 1px #e8b94433}
+#mvpRanking .mvp-rank{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:#39264d;font-weight:900;font-size:20px}
+#mvpRanking .mvp-card:first-child .mvp-rank{background:#e8b944;color:#1b1205}
+#mvpRanking .mvp-nick{font-size:17px;font-weight:850;overflow-wrap:anywhere}
+#mvpRanking .mvp-sub{font-size:11px;letter-spacing:1.5px;color:#b9a8ca;text-transform:uppercase;margin-top:3px}
+#mvpRanking .mvp-kills{text-align:right;font-size:28px;font-weight:950;line-height:1;color:#fff}
+#mvpRanking .mvp-kills small{display:block;font-size:10px;letter-spacing:1.4px;color:#b9a8ca;margin-top:5px}
+#mvpRanking .mvp-empty{padding:24px;text-align:center;border:1px dashed #58416f;border-radius:14px;color:#c3b8d3}th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line)}th{color:#d2bdff}td.num,th.num{text-align:right}.scores{display:grid;grid-template-columns:minmax(0,1fr) 82px 82px;gap:8px;align-items:end;margin:10px 0}.scores label{margin-top:0}.scores input{min-width:0;padding:9px}.pill{display:inline-block;background:#30203f;border-radius:999px;padding:4px 9px;font-size:12px;color:#e3d4ff}.actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}.foot{text-align:center;font-size:12px;color:var(--muted);padding:8px 0 24px}@media(min-width:560px){main{padding:20px}.tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.formrow.two{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr 1fr}.scores{grid-template-columns:minmax(0,1fr) 100px 100px}}@media(max-width:380px){h1{font-size:25px}main{padding:10px}section,.panel{padding:12px}.scores{grid-template-columns:minmax(0,1fr) 66px 66px;gap:5px}table{font-size:12px}}
+
+/* Editor de layouts: vale para todos os tamanhos de tela */
+.layout-grid{display:grid;gap:18px}@media(min-width:1000px){.layout-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);align-items:start}}.ed-del{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0}.ed-del button{width:auto}.ed-kind{display:grid;grid-template-columns:1fr 1fr;gap:8px}.ed-stage{max-width:420px;margin:12px auto 0}#layoutCanvas{display:block;width:100%;height:auto;border-radius:12px;border:1px solid #49315e;background:#100b19;touch-action:none;cursor:grab}.ed-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.ed-nudge{display:grid;grid-template-columns:repeat(4,1fr) 1.4fr;gap:6px;margin-top:10px}.ed-nudge button,.ed-nudge select{min-height:42px;padding:6px}.ed-modes{display:grid;gap:4px;margin:10px 0}.ed-modes label,.ed-check{display:flex;gap:8px;align-items:center;color:var(--text);margin:4px 0}.ed input[type=checkbox],.ed input[type=radio]{width:20px;min-height:20px;height:20px;margin:0;flex-shrink:0}
+.layout-thumb{display:flex;gap:12px;align-items:center;margin:8px 0}.layout-thumb img{width:72px;height:128px;object-fit:cover;border-radius:10px;border:1px solid #49315e;background:#100b19}#logoThumb{height:72px;object-fit:contain}
+.ed-stage{position:relative}.ed-zoom{display:none}.ed-tip-touch{display:none}
+@media(max-width:999px){
+  .ed-stage{position:sticky;top:0;z-index:5;max-width:none;margin:12px -6px 0;padding:6px;background:var(--panel);border-bottom:1px solid var(--line);border-radius:0 0 14px 14px;box-shadow:0 10px 18px #0006}
+  .ed-stage #layoutCanvas{width:auto;max-width:100%;height:min(52vh,52svh);margin:0 auto}
+  .ed-stage.big{position:static;box-shadow:none;border-bottom:0}.ed-stage.big #layoutCanvas{width:100%;height:auto}
+  .ed-zoom{display:block;position:absolute;top:12px;right:12px;width:auto;min-height:36px;padding:6px 10px;font-size:13px;background:#000a;border:1px solid #ffffff33}
+  .ed-tip-touch{display:block}.ed-tip-mouse{display:none}
+  .ed-nudge{grid-template-columns:repeat(4,1fr)}.ed-nudge button{min-height:52px;font-size:22px}.ed-nudge select{grid-column:1/-1;min-height:44px}
+  .ed-del button{width:100%;min-height:48px}
+  .ed-modes label{min-height:40px;margin:0}
+  #edPanel h3{margin-top:16px}
+}
+@media(max-width:420px){.ed-grid{grid-template-columns:1fr 1fr;gap:6px}.ed-grid select{font-size:14px;padding:8px}.ed-kind button{padding:10px 6px;font-size:15px}}
+
+/* Desktop edition */
+@media (min-width: 1000px){
+  body{font-size:15px;background:radial-gradient(ellipse at top,#302044 0,#100b19 520px);}
+  header{padding:28px 36px 24px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+  header h1{font-size:38px;letter-spacing:3px;}
+  header p{margin:5px 0 0;font-size:14px;letter-spacing:1.5px;}
+  main{width:min(1440px,100%);padding:28px 32px 36px;}
+  .tabs{grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;margin-bottom:22px;}
+  .tabs button{min-height:52px;padding:13px 10px;font-size:14px;white-space:nowrap;}
+  section,.panel{padding:24px 26px;border-radius:18px;margin-bottom:20px;box-shadow:0 14px 40px #00000020;}
+  h2{font-size:25px;margin-bottom:18px;}
+  h3{font-size:18px;margin:22px 0 10px;}
+  label{font-size:14px;margin:13px 0 6px;}
+  input,select,button{min-height:44px;}
+  .formrow{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .formrow.two{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .scores{grid-template-columns:minmax(280px,1fr) 140px 140px;gap:12px;max-width:900px;}
+  .scores input{padding:10px 12px;}
+  .tablewrap{border:1px solid var(--line);border-radius:12px;}
+  table{font-size:15px;min-width:0;}
+  th,td{padding:13px 14px;}
+  .item{padding:13px 4px;}
+  #scoreRows,#mvpEntryRows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px;align-items:start;}
+  #rankingPage,#mvpPage,#layoutsPage,#historyPage,#teamsPage,#campsPage,#scorePage{min-height:420px;}
+  #rankingPage .actions,#mvpPage .actions{max-width:520px;}
+  #layoutsPage input[type=file]{padding:12px;}
+  .message{max-width:900px;}
+  .foot{padding:16px 0 28px;}
+}
+@media (min-width:1500px){
+  main{width:min(1600px,100%);padding:34px 44px 44px;}
+  section,.panel{padding:30px 34px;}
+  .tabs button{font-size:15px;}
+}
+
+/* Sistema de acesso */
+#authGate{position:fixed;inset:0;z-index:9999;overflow:auto;background:linear-gradient(160deg,#241335,#100b19 65%);padding:22px 14px;display:flex;align-items:center;justify-content:center}
+#authGate .auth-card{width:min(480px,100%);background:#1c1428;border:1px solid #49315e;border-radius:18px;padding:22px;box-shadow:0 20px 70px #0008}
+#authGate h2{margin:0 0 8px}#authGate .auth-brand{text-align:center;font-size:28px;font-weight:900;letter-spacing:2px;margin-bottom:18px}
+#authGate .auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+#authGate .auth-note{font-size:13px;color:#c3b8d3;margin-top:12px}
+#adminPanel{margin-top:16px;border-top:1px solid #49315e;padding-top:14px}
+.player-kills{margin-top:6px}.pk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px}.pk{display:flex;align-items:center;gap:8px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:#160f22}.pk-name{flex:1;min-width:0;overflow-wrap:anywhere;font-weight:600;font-size:14px}.pk-name small{color:var(--muted);font-weight:400}.pk input{width:72px;min-height:40px;padding:6px 8px;text-align:center}.pk-other{margin-top:8px}.kills-total{background:#241a33!important;font-weight:800;text-align:center;cursor:default}
+.score-summary.scores{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.score-summary label{font-size:13px}.score-hint{font-size:13px;margin:10px 0}.player-kills .pk-grid{grid-template-columns:minmax(0,1fr)}.player-kills label.pk{margin:0;color:var(--text)}.scoreline input[aria-invalid="true"]{border-color:var(--red)}
+</style></head>
+<body><header><div><h1>ORGANIZAÇÃO DE XTREINOS</h1><div class="watermark">@thurfrs</div></div><p>XTREINOS · ORGANIZAÇÃO E GESTÃO</p></header>
+
+<div id="authGate">
+ <div class="auth-card">
+  <div class="auth-brand">ORGANIZAÇÃO DE XTREINOS<div class="watermark">@thurfrs</div></div>
+  <details class="auth-note" id="supabaseConfigBox" style="margin-bottom:16px;display:none">
+   <summary style="cursor:pointer;font-weight:700;color:#e3d4ff">⚙️ Configuração técnica do sistema</summary>
+   <p>Esta área é somente para o responsável técnico configurar o acesso online. Use apenas a chave pública do projeto. Nunca cole uma senha ou chave secreta aqui.</p>
+   <label for="sbProjectUrl">Endereço do sistema online</label><input id="sbProjectUrl" type="url" placeholder="https://endereco-do-projeto-online" autocomplete="url">
+   <label for="sbPublishableKey">Chave pública de conexão</label><input id="sbPublishableKey" type="text" placeholder="sb_publishable_..." autocomplete="off" autocapitalize="off" spellcheck="false">
+   <button id="saveSupabaseConfig" type="button" style="margin-top:10px">Salvar conexão</button>
+   <div id="supabaseConfigMsg" class="message hidden"></div>
+  </details>
+  <div id="authUserArea">
+   <h2 id="authTitle">Entrar na Organização de XTREINOS</h2>
+   <p class="muted" id="authIntro">Entre com seu nick e senha ou faça seu cadastro. O acesso será liberado após a aprovação do administrador.</p>
+   <form id="loginForm">
+    <label for="authLogin" id="authLoginLabel">Nick</label><input id="authLogin" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="30" required placeholder="Seu nick">
+    <label for="authPassword">Senha</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" maxlength="100" required placeholder="Mínimo de 6 caracteres">
+    <div class="auth-actions"><button id="authSubmit" type="submit">Entrar</button><button id="toggleRegister" type="button" class="secondary">Criar conta</button></div>
+   <p style="text-align:center;margin-top:12px"><button id="adminLoginMode" type="button" class="secondary" style="width:auto;padding:8px 12px">Acesso do administrador</button></p>
+   </form>
+   <div id="authMsg" class="message hidden"></div>
+   <p class="auth-note" id="authFootNote">Após o cadastro, aguarde a aprovação do administrador para entrar.</p>
+  </div>
+  <div id="adminArea" class="hidden">
+   <h2>Administração de cadastros</h2>
+   <p class="muted">Veja o nick e a senha de cada cadastro. Aceite, não aceite ou exclua o acesso.</p>
+   <div id="adminList"></div>
+   <div id="adminMsg" class="message hidden"></div>
+   <div class="auth-actions"><button id="adminRefresh" type="button" class="secondary">Atualizar lista</button><button id="adminLogout" type="button" class="secondary">Sair do administrador</button></div>
+  </div>
+ </div>
+</div>
+
+<main id="appMain" class="hidden">
+<section id="accountBar" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 16px"><span id="accountLabel" class="muted">Conta conectada</span><span id="cloudSyncLabel" class="muted" style="font-size:12px">Nuvem não configurada</span><button type="button" id="logoutBtn" class="secondary" style="width:auto;min-width:110px">Sair da conta</button></section>
+<div class="tabs"><button class="secondary" data-page="camps">🏆 Eventos</button><button class="secondary" data-page="teams">👥 Times</button><button data-page="score">📊 Pontuação</button><button class="secondary" data-page="ranking">📊 Ranking</button><button class="secondary" data-page="mvp">👑 MVP</button><button class="secondary" data-page="layouts">🎨 Layouts</button><button class="secondary" data-page="history">📚 Histórico</button><button class="secondary" data-page="backup">💾 Backup</button></div>
+<section id="scorePage"><h2>📊 Pontuação</h2><p class="muted">Selecione o evento e depois o time. Informe a colocação e os abates de cada jogador, incluindo o reserva: o total do time é calculado automaticamente e o MVP é atualizado ao salvar a queda.</p><label for="activeCamp">EVENTO</label><select id="activeCamp"></select><div id="quedaBar" class="queda-bar"></div><h3 id="quedaTitle"></h3><div id="scoreRows"></div><div class="actions"><button id="addScoreRow" class="secondary">＋ Adicionar time à partida</button></div><div class="actions"><button id="saveMatch">Finalizar queda</button><button id="deleteQueda" type="button" class="danger hidden">Excluir esta queda</button></div><div id="scoreMsg" class="message hidden"></div></section>
+<section id="teamsPage" class="hidden"><h2>👥 Times</h2><p class="muted">Cadastre o nome do time e os nicks dos jogadores: 4 jogadores obrigatórios e 1 reserva opcional.</p><form id="teamForm"><input type="hidden" id="teamEditId"><label for="teamName">Nome do time</label><input id="teamName" maxlength="80" placeholder="Ex.: Alpha Esports" required><div class="formrow two"><div><label for="teamP1">Jogador 1 *</label><input id="teamP1" data-team-player maxlength="80" placeholder="Nick do jogador 1" required></div><div><label for="teamP2">Jogador 2 *</label><input id="teamP2" data-team-player maxlength="80" placeholder="Nick do jogador 2" required></div><div><label for="teamP3">Jogador 3 *</label><input id="teamP3" data-team-player maxlength="80" placeholder="Nick do jogador 3" required></div><div><label for="teamP4">Jogador 4 *</label><input id="teamP4" data-team-player maxlength="80" placeholder="Nick do jogador 4" required></div></div><label for="teamExtra">Jogador extra / reserva (opcional)</label><input id="teamExtra" maxlength="80" placeholder="Nick do reserva (opcional)"><div class="actions"><button id="teamSubmit">Cadastrar time</button><button type="button" id="teamCancelEdit" class="secondary hidden">Cancelar edição</button></div></form><h3>Times cadastrados</h3><div id="teamsList"></div></section>
+<section id="campsPage" class="hidden"><h2>🏆 Eventos</h2><form id="campForm"><label for="campName">Nome Do Evento</label><input id="campName" maxlength="100" placeholder="Ex.: Evento #001" required><div style="margin-top:10px"><button>Criar Evento</button></div></form><h3>Evento Cadastrado</h3><div id="campsList"></div></section>
+<section id="rankingPage" class="hidden"><h2>🥇 Ranking</h2><label for="rankingCamp">EVENTO</label><select id="rankingCamp"></select><div id="ranking"></div><div class="actions"><button id="downloadRanking" type="button">📥 Baixar tabela para postar (PNG)</button></div><p class="muted">Gera uma imagem vertical pronta para postar nos Stories ou enviar aos jogadores.</p></section>
+<section id="mvpPage" class="hidden"><h2>👑 Ranking MVP</h2><label for="mvpCamp">EVENTO</label><select id="mvpCamp"></select><div id="mvpRanking"></div><div class="actions"><button id="downloadMvp" type="button">📥 Baixar tabela MVP (PNG)</button></div><p class="muted">Os abates individuais lançados nas quedas são somados automaticamente aqui, incluindo os do reserva, sem precisar procurar ou lançar o jogador novamente. A tabela e a imagem exportada mostram os 5 melhores jogadores.</p></section>
+<section id="historyPage" class="hidden"><h2>📚 HISTÓRICO</h2><label for="historyCamp">EVENTO</label><select id="historyCamp"></select><div id="history"></div></section>
+<section id="layoutsPage" class="hidden"><h2>🎨 Layouts</h2><p class="muted">Monte a arte das tabelas de classificação e MVP: escolha o fundo e a logo e arraste cada informação (time, abates, pontos…) para o lugar certo da sua arte.</p>
+<div class="layout-grid">
+ <div>
+  <h3>1. Perfil do organizador</h3>
+  <label for="layoutProfile">Perfil salvo</label><select id="layoutProfile"></select>
+  <div class="actions"><button type="button" id="newLayout" class="secondary">＋ Novo perfil</button><button type="button" id="deleteLayout" class="danger">Excluir perfil</button></div>
+  <div class="formrow two"><div><label for="layoutName">Nome do perfil</label><input id="layoutName" maxlength="60" placeholder="Ex.: ANTHEADSHOT"></div><div><label for="layoutBrand">Nome que aparece na arte</label><input id="layoutBrand" maxlength="60" placeholder="Ex.: ANTHEADSHOT X TREINO"></div></div>
+  <div class="formrow two"><div><label for="layoutPrimary">Cor principal</label><input id="layoutPrimary" type="color" value="#211332" style="padding:4px;height:48px"></div><div><label for="layoutAccent">Cor de destaque</label><input id="layoutAccent" type="color" value="#925cff" style="padding:4px;height:48px"></div></div>
+  <div class="actions"><button type="button" id="saveLayout">💾 Salvar nome e cores</button></div>
+  <h3>2. Imagens</h3>
+  <label for="layoutBackground">Imagem de fundo (sua arte)</label><input id="layoutBackground" type="file" accept="image/*">
+  <p class="muted">A arte é exportada no formato vertical 1080×1920 (Stories). Use uma arte vertical.</p>
+  <div class="layout-thumb"><img id="backgroundThumb" alt="Prévia do fundo" class="hidden"><div><div id="backgroundPreview" class="muted"></div><button type="button" id="removeBackground" class="secondary hidden" style="width:auto;margin-top:6px">Remover fundo</button></div></div>
+  <label for="layoutLogo">Logo do organizador (opcional)</label><input id="layoutLogo" type="file" accept="image/*">
+  <div class="layout-thumb"><img id="logoThumb" alt="Prévia da logo" class="hidden"><div><div id="logoPreview" class="muted"></div><button type="button" id="removeLogo" class="secondary hidden" style="width:auto;margin-top:6px">Remover logo</button></div></div>
+  <h3>3. Formato da imagem exportada</h3>
+  <select id="layoutMode"><option value="custom">Personalizado: usa as posições do editor</option><option value="classic">Automático: arte pronta do sistema</option></select>
+  <div class="actions"><button type="button" id="exportLayouts" class="secondary">📤 Exportar perfis</button><button type="button" id="importLayoutsBtn" class="secondary">📥 Importar perfis</button></div><input id="importLayoutsFile" type="file" accept="application/json,.json" class="hidden">
+  <div id="layoutMsg" class="message hidden"></div>
+  <p class="muted">As imagens e as posições são salvas no perfil na hora, na sua conta online. Selecione o perfil antes de baixar as tabelas nas abas Ranking e MVP.</p>
+ </div>
+ <div class="ed">
+  <h3>4. Editor de posições</h3>
+  <div class="ed-kind"><button type="button" data-ed-kind="ranking">🥇 Classificação</button><button type="button" class="secondary" data-ed-kind="mvp">👑 MVP</button></div>
+  <label for="layoutPreviewCamp">Dados da prévia</label><select id="layoutPreviewCamp"></select>
+  <p class="message hidden" id="edModeNote"></p>
+  <div class="ed-stage" id="edStage"><canvas id="layoutCanvas" width="1080" height="1920" aria-label="Prévia editável da arte"></canvas><button type="button" class="secondary ed-zoom" id="edZoom" aria-pressed="false">🔍 Ampliar</button></div>
+  <p class="muted" style="text-align:center"><span class="ed-tip-mouse">Clique e arraste um item da prévia para mudar a posição dele.</span><span class="ed-tip-touch">Toque num item e arraste com o dedo. A prévia fica presa no topo enquanto você rola os ajustes; use “Ampliar” para vê-la maior.</span></p>
+  <div id="edPanel"></div>
+  <div id="edRows"></div>
+ </div>
+</div>
+</section>
+<section id="backupPage" class="hidden"><h2>💾 Backup dos dados</h2><p class="muted">Exporte seus dados para não perdê-los se limpar os dados do navegador ou trocar de aparelho.</p><div class="actions"><button id="exportBtn">Exportar backup</button><button id="importBtn" class="secondary">Importar backup</button></div><input id="importFile" type="file" accept="application/json,.json" class="hidden"><div id="backupMsg" class="message hidden"></div><p class="muted">Os dados são salvos online na sua conta e também mantêm uma cópia local. O backup JSON é uma cópia adicional de segurança.</p></section>
+<div class="foot">Organização de XTREINOS · @thurfrs</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(()=>{'use strict';
+const USERS_KEY='xtcup_users_v1'; // legado local; não usado para autenticação online
+const SUPABASE_CONFIG_KEY='xtcup_supabase_config_v1';
+// Na publicação, substitua os dois valores abaixo pelos dados públicos do seu projeto Supabase.
+const XT_SUPABASE_URL='https://eeikdbcgavnahwjycrqi.supabase.co';
+const XT_SUPABASE_PUBLISHABLE_KEY='sb_publishable_2RoL6x38cMt9z0sMMTLEGA_30UZJFRT';
+const XT_ADMIN_EMAIL='xtcupbrasil@gmail.com';
+const USER_TOKEN_KEY='xtreinos_session_v1';
+let authMode='login', activeUser=null, supabaseClient=null, userToken='', cloudReady=false, syncTimer=null, syncQueue=Promise.resolve();
+try{userToken=localStorage.getItem(USER_TOKEN_KEY)||''}catch(e){}
+const auth$=id=>document.getElementById(id);
+function getSavedSupabaseConfig(){try{const local=JSON.parse(localStorage.getItem(SUPABASE_CONFIG_KEY)||'null');if(local&&local.url&&local.key)return local}catch(e){}if(/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(XT_SUPABASE_URL)&&XT_SUPABASE_PUBLISHABLE_KEY.length>20)return {url:XT_SUPABASE_URL,key:XT_SUPABASE_PUBLISHABLE_KEY};return null}
+function ensureSupabase(){
+ const cfg=getSavedSupabaseConfig();
+ if(!cfg||!cfg.url||!cfg.key)throw new Error('O sistema de login ainda está sendo configurado. Tente novamente mais tarde.');
+ if(!window.supabase||!window.supabase.createClient)throw new Error('Não foi possível conectar ao sistema de acesso. Confira a internet e tente novamente.');
+ if(!supabaseClient)supabaseClient=window.supabase.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ return supabaseClient;
+}
+function authNotice(msg){auth$('authMsg').textContent=msg;auth$('authMsg').classList.remove('hidden')}
+function configNotice(msg){auth$('supabaseConfigMsg').textContent=msg;auth$('supabaseConfigMsg').classList.remove('hidden')}
+function showAdmin(){auth$('authUserArea').classList.add('hidden');auth$('adminArea').classList.remove('hidden');auth$('adminMsg').classList.add('hidden');renderAdmin()}
+function adminNotice(msg){const el=auth$('adminMsg');el.textContent=msg;el.classList.remove('hidden')}
+function setUserToken(t){userToken=t||'';try{t?localStorage.setItem(USER_TOKEN_KEY,t):localStorage.removeItem(USER_TOKEN_KEY)}catch(e){}}
+async function api(path,{method='GET',body,token}={}){const headers={};if(body!==undefined)headers['Content-Type']='application/json';if(token)headers.Authorization='Bearer '+token;let res;try{res=await fetch(path,{method,headers,body:body!==undefined?JSON.stringify(body):undefined})}catch(e){throw new Error('Sem conexão. Confira a internet e tente novamente.')}const data=await res.json().catch(()=>null);if(!res.ok){const err=new Error((data&&data.error)||'Erro inesperado ('+res.status+').');err.status=res.status;throw err}return data}
+async function adminApi(path,opts={}){const client=ensureSupabase();const {data:{session}}=await client.auth.getSession();if(!session)throw new Error('Entre novamente como administrador.');return api(path,{...opts,token:session.access_token})}
+const STATUS_LABEL={pending:'⏳ Aguardando',approved:'✅ Aceito',rejected:'⛔ Não aceito'};
+async function renderAdmin(){const box=auth$('adminList');box.innerHTML='<p class="muted">Carregando cadastros...</p>';try{const data=await adminApi('/api/admin/accounts');if(!data.length){box.innerHTML='<p class="muted">Nenhum cadastro ainda.</p>';return}const order={pending:0,approved:1,rejected:2};box.innerHTML=data.slice().sort((a,b)=>order[a.status]-order[b.status]).map(u=>`<div class="item" style="align-items:flex-start;gap:12px;flex-wrap:wrap"><div style="min-width:0;flex:1"><b style="overflow-wrap:anywhere">${esc(u.nick)}</b> <span class="muted" style="font-size:12px">${STATUS_LABEL[u.status]||esc(u.status)}</span><div class="muted" style="overflow-wrap:anywhere">Senha: <code>${esc(u.password)}</code></div><div class="muted" style="font-size:12px">Cadastro: ${new Date(u.createdAt).toLocaleString('pt-BR')}</div></div><div style="display:flex;gap:8px;flex-wrap:wrap">${u.status!=='approved'?`<button type="button" data-admin-action="approved" data-id="${u.id}" data-nick="${esc(u.nick)}">Aceitar</button>`:''}${u.status!=='rejected'?`<button type="button" class="secondary" data-admin-action="rejected" data-id="${u.id}" data-nick="${esc(u.nick)}">Não aceitar</button>`:''}<button type="button" class="danger" data-admin-action="delete" data-id="${u.id}" data-nick="${esc(u.nick)}">Excluir acesso</button></div></div>`).join('')}catch(e){console.error(e);box.innerHTML='<p class="muted">Não foi possível carregar os cadastros.</p>';adminNotice(e.message||'Erro ao carregar cadastros.')}}
+const savedCfg=getSavedSupabaseConfig();if(savedCfg){auth$('sbProjectUrl').value=savedCfg.url||'';auth$('sbPublishableKey').value=savedCfg.key||'';}
+// A configuração local serve apenas para testes neste navegador. Para todos os visitantes, preencha as constantes XT_SUPABASE_URL e XT_SUPABASE_PUBLISHABLE_KEY antes de publicar.
+// A caixa técnica de configuração só aparece quando o responsável abre o endereço com ?setup=1.
+if(new URLSearchParams(location.search).get('setup')==='1'){auth$('supabaseConfigBox').style.display='block';auth$('supabaseConfigBox').open=true;}
+auth$('saveSupabaseConfig').onclick=()=>{const url=auth$('sbProjectUrl').value.trim().replace(/\/$/,''),key=auth$('sbPublishableKey').value.trim();if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url))return configNotice('URL inválida. Copie o endereço do projeto online.');if(!key||key.length<20)return configNotice('Cole a chave pública do projeto. Nunca use uma chave secreta.');try{localStorage.setItem(SUPABASE_CONFIG_KEY,JSON.stringify({url,key}));supabaseClient=null;ensureSupabase();configNotice('Conexão salva neste navegador. Para que todos os clientes possam entrar, a conexão também precisa ser configurada no site publicado.');auth$('cloudSyncLabel').textContent='Conexão configurada';}catch(e){configNotice('Não foi possível salvar a conexão: '+e.message)}};
+function setMode(mode){authMode=mode;const admin=mode==='admin',reg=mode==='register';const input=auth$('authLogin');input.value='';input.type=admin?'email':'text';input.autocomplete=admin?'email':'username';input.maxLength=admin?120:30;input.placeholder=admin?'E-mail do administrador':'Seu nick';auth$('authLoginLabel').textContent=admin?'E-mail do administrador':'Nick';auth$('authPassword').value='';auth$('authPassword').autocomplete=reg?'new-password':'current-password';auth$('authTitle').textContent=admin?'Acesso do administrador':reg?'Criar conta':'Entrar na Organização de XTREINOS';auth$('authIntro').textContent=admin?'Entre com a conta autorizada do administrador.':reg?'Cadastre só o seu nick e uma senha. Você poderá entrar depois que o administrador aceitar.':'Entre com seu nick e senha depois da aprovação.';auth$('authSubmit').textContent=admin?'Entrar como administrador':reg?'Solicitar cadastro':'Entrar';auth$('toggleRegister').textContent=mode==='login'?'Criar conta':'Já tenho conta';auth$('adminLoginMode').classList.toggle('hidden',admin);auth$('authMsg').classList.add('hidden')}
+auth$('adminLoginMode').onclick=()=>{setMode('admin');auth$('authLogin').focus()};
+auth$('toggleRegister').onclick=()=>setMode(authMode==='login'?'register':'login');
+auth$('loginForm').onsubmit=async e=>{
+ e.preventDefault();const login=auth$('authLogin').value.trim(),password=auth$('authPassword').value;
+ auth$('authSubmit').disabled=true;
+ try{
+  if(authMode==='admin'){
+   const client=ensureSupabase();
+   const {data,error}=await client.auth.signInWithPassword({email:login.toLowerCase(),password});if(error)throw error;
+   if(String(data.user&&data.user.email||'').toLowerCase()!==XT_ADMIN_EMAIL.toLowerCase()){await client.auth.signOut();return authNotice('Esta conta não é a do administrador.');}
+   auth$('loginForm').reset();showAdmin();return;
+  }
+  if(password.length<6)return authNotice('Use uma senha com pelo menos 6 caracteres.');
+  if(authMode==='register'){
+   await api('/api/auth/register',{method:'POST',body:{nick:login,password}});
+   auth$('loginForm').reset();setMode('login');authNotice('Cadastro recebido! Aguarde o administrador aceitar seu acesso para entrar com seu nick e senha.');return;
+  }
+  const res=await api('/api/auth/login',{method:'POST',body:{nick:login,password}});
+  setUserToken(res.token);auth$('loginForm').reset();
+  await enterApp({nick:res.nick});
+ }catch(err){console.error('Organização de XTREINOS login:',err);const msg=String(err&&err.message||'');
+  if(/Invalid login credentials/i.test(msg))authNotice('E-mail ou senha do administrador incorretos.');
+  else authNotice(msg||'Não foi possível entrar. Confira a internet e tente novamente.');}
+ finally{auth$('authSubmit').disabled=false;}
+};
+auth$('adminLogout').onclick=async()=>{try{const c=ensureSupabase();await c.auth.signOut()}catch(e){}auth$('adminArea').classList.add('hidden');auth$('authUserArea').classList.remove('hidden');auth$('loginForm').reset();setMode('login')};
+auth$('adminRefresh').onclick=()=>{auth$('adminMsg').classList.add('hidden');renderAdmin()};
+auth$('adminList').addEventListener('click',async e=>{const b=e.target.closest('[data-admin-action]');if(!b)return;const id=b.dataset.id,nick=b.dataset.nick,action=b.dataset.adminAction;const ask={approved:`Aceitar o acesso de "${nick}"?`,rejected:`Não aceitar o acesso de "${nick}"? A pessoa não conseguirá entrar.`,delete:`Excluir o acesso de "${nick}"?\n\nO cadastro e os dados salvos dessa conta serão apagados. Essa ação não pode ser desfeita.`}[action];if(!confirm(ask))return;b.disabled=true;try{if(action==='delete')await adminApi('/api/admin/accounts/'+id,{method:'DELETE'});else await adminApi('/api/admin/accounts/'+id,{method:'PATCH',body:{status:action}});adminNotice(action==='approved'?`Acesso de "${nick}" aceito.`:action==='rejected'?`Acesso de "${nick}" não aceito.`:`Acesso de "${nick}" excluído.`);await renderAdmin()}catch(err){console.error(err);b.disabled=false;adminNotice('Não foi possível atualizar o cadastro. '+(err.message||''))}});
+
+// O botão administrativo não faz parte da tela do cliente. Evita interromper o JavaScript por um elemento ausente.
+const LEGACY_KEY='xtcup_offline_v2',LEGACY_LAYOUT_KEY='xtcup_layout_profiles_v1';let KEY=LEGACY_KEY,LAYOUT_KEY=LEGACY_LAYOUT_KEY;let layouts=[];let activeLayoutId='default';let layoutLogoData='';let db={teams:[],camps:[],matches:[]};
+const MAX_QUEDAS=10;let editingMatchId=null,scoreCtx='',scoreLegacyMvp=[];
+function accountStorageKey(base,nick){return base+'__nick__'+encodeURIComponent(String(nick||'').trim().toLocaleLowerCase('pt-BR'))}
+function showCloudError(err){console.error('Organização de XTREINOS cloud sync:',err);const label=auth$('cloudSyncLabel');if(label)label.textContent='⚠ Não foi possível salvar online';if(err&&err.status===401){alert('Seu acesso foi removido ou a sessão expirou. Entre novamente.');$('logoutBtn').click();}}
+function saveCloudNow(){
+ if(!cloudReady||!userToken)return Promise.resolve();
+ const payload={data:db,layouts:layouts};
+ syncQueue=syncQueue.catch(()=>{}).then(async()=>{await api('/api/workspace',{method:'PUT',body:payload,token:userToken});const label=auth$('cloudSyncLabel');if(label)label.textContent='✓ Dados salvos online';});
+ return syncQueue;
+}
+function scheduleCloudSave(){if(!cloudReady||!userToken)return;clearTimeout(syncTimer);auth$('cloudSyncLabel').textContent='Salvando online…';syncTimer=setTimeout(()=>saveCloudNow().catch(showCloudError),450)}
+async function prepareAccountStorage(user){
+ cloudReady=false;clearTimeout(syncTimer);
+ KEY=accountStorageKey(LEGACY_KEY,user.nick);LAYOUT_KEY=accountStorageKey(LEGACY_LAYOUT_KEY,user.nick);
+ db={teams:[],camps:[],matches:[]};layouts=[];activeLayoutId='default';layoutLogoData='';load();loadLayouts();
+ const workspace=await api('/api/workspace',{token:userToken});
+ const d=workspace&&workspace.data;
+ if(d&&Array.isArray(d.teams)&&Array.isArray(d.camps)&&Array.isArray(d.matches)){db=d;if(Array.isArray(workspace.layouts)&&workspace.layouts.length){layouts=workspace.layouts;activeLayoutId=layouts.some(x=>x.id===activeLayoutId)?activeLayoutId:layouts[0].id;}}
+ else await api('/api/workspace',{method:'PUT',body:{data:db,layouts:layouts},token:userToken});
+ cloudReady=true;editingMatchId=null;scoreCtx='';renderLayoutProfiles();render();auth$('accountLabel').textContent='Conta conectada: '+user.nick;auth$('cloudSyncLabel').textContent='✓ Dados salvos online';
+}
+async function enterApp(user){activeUser=user;await prepareAccountStorage(user);auth$('authGate').classList.add('hidden');auth$('appMain').classList.remove('hidden');}
+async function restoreSession(){
+ if(userToken){try{const me=await api('/api/auth/me',{token:userToken});await enterApp({nick:me.nick});return;}catch(e){if(e.status===401||e.status===403)setUserToken('');console.warn('session restore:',e.message);return;}}
+ try{const client=ensureSupabase();const {data:{session}}=await client.auth.getSession();if(session&&String(session.user.email||'').toLowerCase()===XT_ADMIN_EMAIL.toLowerCase())showAdmin();}catch(e){console.warn('admin restore:',e.message)}
+}
+
+const $=id=>document.getElementById(id);const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function points(p){return ({1:12,2:9,3:8,4:7,5:6,6:5,7:4,8:3,9:2,10:1})[Number(p)]||0}function persist(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){alert('Não foi possível salvar neste navegador. Exporte um backup e tente novamente.')}scheduleCloudSave()}function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&Array.isArray(x.teams)&&Array.isArray(x.camps)&&Array.isArray(x.matches))db=x}catch(e){}}function notice(id,msg){$(id).textContent=msg;$(id).classList.remove('hidden')}function options(id,items,placeholder){const el=$(id),old=el.value;el.innerHTML=`<option value="">${placeholder}</option>`+items.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('');if(items.some(x=>x.id===old))el.value=old}const LAYOUT_W=1080,LAYOUT_H=1920;
+function baseLayout(){return {id:'default',name:'Organização de XTREINOS',brand:'Organização de XTREINOS',primary:'#211332',accent:'#925cff',logo:'',backgroundImage:'',mode:'classic'}}
+function currentLayout(){return layouts.find(x=>x.id===activeLayoutId)||baseLayout()}
+function ensureActiveLayout(){let x=layouts.find(l=>l.id===activeLayoutId);if(!x){x={...currentLayout(),id:activeLayoutId};layouts.push(x)}return x}
+function loadLayouts(){try{layouts=JSON.parse(localStorage.getItem(LAYOUT_KEY)||'[]');if(!Array.isArray(layouts))layouts=[]}catch(e){layouts=[]}if(!layouts.length)layouts=[baseLayout()];activeLayoutId=layouts[0].id;renderLayoutProfiles()}
+function saveLayouts(){scheduleCloudSave();try{localStorage.setItem(LAYOUT_KEY,JSON.stringify(layouts))}catch(e){console.warn('layouts: a cópia local não coube no navegador; mantida apenas online.',e)}return true}
+function renderLayoutProfiles(){const el=$('layoutProfile');if(!el)return;el.innerHTML=layouts.map(x=>`<option value="${esc(x.id)}">${esc(x.name)}</option>`).join('');if(layouts.some(x=>x.id===activeLayoutId))el.value=activeLayoutId;fillLayoutForm()}
+function fillLayoutForm(){const x=currentLayout();$('layoutName').value=x.name||'';$('layoutBrand').value=x.brand||'';$('layoutPrimary').value=x.primary||'#211332';$('layoutAccent').value=x.accent||'#925cff';$('layoutMode').value=x.mode==='custom'?'custom':'classic';layoutLogoData=x.logo||'';renderLayoutImages();edSel=null;renderEditorAll()}
+function renderLayoutImages(){const x=currentLayout();[['background',x.backgroundImage,'Fundo salvo neste perfil.','Nenhuma imagem de fundo adicionada.'],['logo',x.logo,'Logo salva neste perfil.','Nenhuma logo adicionada.']].forEach(([k,src,on,off])=>{const img=$(k+'Thumb');img.classList.toggle('hidden',!src);if(src)img.src=src;else img.removeAttribute('src');$(k+'Preview').textContent=src?on:off;$('remove'+(k==='logo'?'Logo':'Background')).classList.toggle('hidden',!src)})}
+function readLayoutForm(){const x=currentLayout();return {...x,id:activeLayoutId,name:$('layoutName').value.trim()||'Meu layout',brand:$('layoutBrand').value.trim()||$('layoutName').value.trim()||'Organização de XTREINOS',primary:$('layoutPrimary').value||'#211332',accent:$('layoutAccent').value||'#925cff',logo:x.logo||'',backgroundImage:x.backgroundImage||''}}
+
+// ===== Posições personalizadas =====
+const FIELD_LABEL={rank:'Posição',name:'Nome',kills:'Abates',points:'Pontos'};
+const STATIC_LABEL={title:'Título',brand:'Nome da organização',camp:'Nome da CAMP',hdrName:'Cabeçalho do nome',hdrKills:'Cabeçalho de abates',hdrPoints:'Cabeçalho de pontos',footer:'Rodapé',logo:'Logo'};
+function defaultSpec(kind,accent){const mvp=kind==='mvp',acc=/^#[0-9a-f]{6}$/i.test(accent||'')?accent:'#925cff',top=mvp?600:540,gap=mvp?230:100,count=mvp?5:12,killsX=mvp?900:800;
+ const t=(x,y,size,extra)=>({x,y,size,color:'#ffffff',align:'center',bold:true,visible:true,...extra});
+ const statics={logo:{x:150,y:150,size:170,visible:true},title:t(540,200,84,{text:mvp?'RANKING MVP':'CLASSIFICAÇÃO',color:acc}),brand:t(540,290,52),camp:t(540,365,32,{color:'#ffbf38'}),hdrName:t(190,470,26,{text:mvp?'JOGADOR':'TIME',align:'left',color:acc}),hdrKills:t(killsX,470,26,{text:'ABATES',color:acc})};
+ if(!mvp)statics.hdrPoints=t(960,470,26,{text:'PTS',color:acc});
+ statics.footer=t(540,1830,26,{text:mvp?'O CRAQUE DA CAMP!':'JOGUE • COMPITA • EVOLUA',color:acc});
+ const fields={rank:{size:mvp?54:36,color:'#ffdc66',align:'center',bold:true,visible:true},name:{size:mvp?46:34,color:'#ffffff',align:'left',bold:true,visible:true,max:mvp?600:520},kills:{size:mvp?56:34,color:'#ffffff',align:'center',bold:true,visible:true}};
+ if(!mvp)fields.points={size:38,color:'#ffdc66',align:'center',bold:true,visible:true};
+ const rows=[];for(let i=0;i<count;i++){const y=top+i*gap,r={rank:{x:110,y},name:{x:190,y},kills:{x:killsX,y}};if(!mvp)r.points={x:960,y};rows.push(r)}
+ return {statics,fields,rows,bar:{visible:true,color:'#000000',opacity:55,x:60,w:960,h:mvp?190:84}}}
+const edNum=(v,d,min,max)=>{v=Number(v);return Number.isFinite(v)?Math.min(max,Math.max(min,Math.round(v))):d};
+const edColor=(v,d)=>/^#[0-9a-f]{6}$/i.test(v||'')?v:d;
+// Garante que o perfil tenha posições válidas para a tabela (corrige dados antigos ou importados).
+function getSpec(layout,kind){if(!layout.custom||typeof layout.custom!=='object')layout.custom={};const def=defaultSpec(kind,layout.accent),s=layout.custom[kind];
+ if(!s||typeof s!=='object'||!Array.isArray(s.rows)||!s.rows.length)return layout.custom[kind]=def;
+ const out={statics:{},fields:{},rows:[],bar:{}};
+ for(const k in def.statics){const d=def.statics[k],v={...d,...(s.statics&&s.statics[k]||{})};out.statics[k]={...v,x:edNum(v.x,d.x,-200,LAYOUT_W+200),y:edNum(v.y,d.y,-200,LAYOUT_H+200),size:edNum(v.size,d.size,8,600),visible:v.visible!==false};if('color' in d){out.statics[k].color=edColor(v.color,d.color);out.statics[k].align=['left','center','right'].includes(v.align)?v.align:d.align;out.statics[k].bold=v.bold!==false}if('text' in d)out.statics[k].text=String(v.text??d.text).slice(0,80)}
+ for(const f in def.fields){const d=def.fields[f],v={...d,...(s.fields&&s.fields[f]||{})};out.fields[f]={size:edNum(v.size,d.size,8,300),color:edColor(v.color,d.color),align:['left','center','right'].includes(v.align)?v.align:d.align,bold:v.bold!==false,visible:v.visible!==false};if('max' in d)out.fields[f].max=edNum(v.max,d.max,40,LAYOUT_W)}
+ s.rows.slice(0,20).forEach((r,i)=>{const d=def.rows[Math.min(i,def.rows.length-1)],o={};for(const f in def.fields){const p=r&&r[f]||{};o[f]={x:edNum(p.x,d[f].x,-200,LAYOUT_W+200),y:edNum(p.y,d[f].y,-200,LAYOUT_H+200)};if(p.hidden===true)o[f].hidden=true}out.rows.push(o)});
+ const b={...def.bar,...(s.bar||{})};out.bar={visible:b.visible!==false,color:edColor(b.color,def.bar.color),opacity:edNum(b.opacity,55,0,100),x:edNum(b.x,60,-200,LAYOUT_W),w:edNum(b.w,960,10,LAYOUT_W+200),h:edNum(b.h,def.bar.h,4,600)};
+ return layout.custom[kind]=out}
+const layoutImgCache=new Map();
+function getLayoutImg(src){if(!src)return Promise.resolve(null);if(!layoutImgCache.has(src)){if(layoutImgCache.size>12)layoutImgCache.clear();layoutImgCache.set(src,new Promise(res=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);im.src=src}))}return layoutImgCache.get(src)}
+// Desenha a arte com as posições do perfil. Com opts.editor, mostra itens ocultos apagados e destaca a seleção.
+async function drawCustom(ctx,layout,spec,kind,data,campName,opts){const W=LAYOUT_W,H=LAYOUT_H,editor=!!(opts&&opts.editor),hits=[];
+ const [bg,logo]=await Promise.all([getLayoutImg(layout.backgroundImage),getLayoutImg(layout.logo)]);
+ ctx.save();ctx.clearRect(0,0,W,H);
+ if(bg){const sc=Math.max(W/bg.width,H/bg.height),w=bg.width*sc,h=bg.height*sc;ctx.drawImage(bg,(W-w)/2,(H-h)/2,w,h)}
+ else{const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#08080c');g.addColorStop(.45,layout.primary||'#211332');g.addColorStop(1,'#09070b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+ ctx.textBaseline='middle';
+ const text=(str,st,x,y,hit,max)=>{if(!st.visible&&!editor)return;ctx.save();if(!st.visible)ctx.globalAlpha=.3;ctx.font=`${st.bold?'900':'500'} ${st.size}px Arial`;ctx.fillStyle=st.color;ctx.textAlign=st.align;ctx.shadowColor='rgba(0,0,0,.65)';ctx.shadowBlur=Math.max(2,st.size/7);let s=String(str??'');if(max)while(ctx.measureText(s).width>max&&s.length>2)s=s.slice(0,-2)+'…';ctx.fillText(s,x,y);const w=Math.max(20,ctx.measureText(s).width),left=st.align==='center'?x-w/2:st.align==='right'?x-w:x;hits.push({...hit,x:left-8,y:y-st.size*.65,w:w+16,h:st.size*1.3});ctx.restore()};
+ const rows=spec.rows,mvp=kind==='mvp';
+ if(spec.bar.visible){ctx.save();ctx.globalAlpha=spec.bar.opacity/100;ctx.fillStyle=spec.bar.color;rows.forEach((r,i)=>{if(!data[i])return;roundRect(ctx,spec.bar.x,r.name.y-spec.bar.h/2,spec.bar.w,spec.bar.h,Math.min(14,spec.bar.h/3),true)});ctx.restore()}
+ for(const k in spec.statics){const st=spec.statics[k];
+  if(k==='logo'){const sz=st.size;if(logo&&(st.visible||editor)){ctx.save();if(!st.visible)ctx.globalAlpha=.3;const sc=Math.min(sz/logo.width,sz/logo.height),w=logo.width*sc,h=logo.height*sc;ctx.drawImage(logo,st.x-w/2,st.y-h/2,w,h);ctx.restore();hits.push({type:'static',key:k,x:st.x-w/2,y:st.y-h/2,w,h})}else if(editor){ctx.save();if(!st.visible)ctx.globalAlpha=.3;ctx.setLineDash([10,8]);ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=3;ctx.strokeRect(st.x-sz/2,st.y-sz/2,sz,sz);ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='bold 26px Arial';ctx.textAlign='center';ctx.fillText('LOGO',st.x,st.y);ctx.restore();hits.push({type:'static',key:k,x:st.x-sz/2,y:st.y-sz/2,w:sz,h:sz})}continue}
+  const value=k==='brand'?(layout.brand||layout.name||'Organização de XTREINOS').toUpperCase():k==='camp'?campName:st.text;
+  text(value,st,st.x,st.y,{type:'static',key:k},W-40)}
+ rows.forEach((r,i)=>{const d=data[i];if(!d)return;const vals={rank:mvp?String(i+1).padStart(2,'0'):String(i+1),name:d.name||d.teamName||'—',kills:String(d.kills||0),points:String(d.points??d.total??0)};
+  for(const f in spec.fields){const st=r[f].hidden?{...spec.fields[f],visible:false}:spec.fields[f];text(vals[f],st,r[f].x,r[f].y,{type:'row',i,f},st.max)}});
+ if(editor&&opts.sel){const sel=opts.sel,m=opts.mode;ctx.save();ctx.setLineDash([12,8]);ctx.lineWidth=4;ctx.strokeStyle='#00e5ff';hits.filter(h=>sel.type==='static'?h.type==='static'&&h.key===sel.key:h.type==='row'&&(m==='all'||(m==='row'&&h.i===sel.i)||(m==='col'&&h.f===sel.f)||(h.i===sel.i&&h.f===sel.f))).forEach(h=>ctx.strokeRect(h.x,h.y,h.w,h.h));ctx.restore()}
+ ctx.restore();return hits}
+
+let edKind='ranking',edSel=null,edMode='item',edHits=[],edDrag=null,edBusy=false,edAgain=false;
+function edSpec(){return getSpec(ensureActiveLayout(),edKind)}
+function edPreviewData(spec){const id=$('layoutPreviewCamp').value,mvp=edKind==='mvp';let real=[];if(id)real=mvp?getMvpRows(id):getRankingRows(id);return spec.rows.map((_,i)=>real[i]||(id?null:{name:(mvp?'JOGADOR ':'TIME ')+(i+1),kills:Math.max(0,(mvp?18:24)-i*2),points:Math.max(0,62-i*5)}))}
+async function renderEditor(){if(edBusy){edAgain=true;return}edBusy=true;try{const layout={...readLayoutForm()},spec=edSpec(),id=$('layoutPreviewCamp').value,camp=db.camps.find(c=>c.id===id);edHits=await drawCustom($('layoutCanvas').getContext('2d'),layout,spec,edKind,edPreviewData(spec),camp?camp.name:'Evento #001',{editor:true,sel:edSel,mode:edMode})}catch(e){console.error('editor:',e)}finally{edBusy=false;if(edAgain){edAgain=false;renderEditor()}}}
+function renderEditorAll(){if(!$('edPanel'))return;renderEditorPanel();renderEditorRows();renderEditor()}
+function edPos(spec){if(!edSel)return null;return edSel.type==='static'?spec.statics[edSel.key]:spec.rows[edSel.i]&&spec.rows[edSel.i][edSel.f]}
+function edTouch(){const l=ensureActiveLayout();if(l.mode!=='custom'){l.mode='custom';$('layoutMode').value='custom';$('edModeNote').classList.add('hidden');notice('layoutMsg','Formato personalizado ativado: a exportação passa a usar as posições do editor.')}}
+// Itens afetados pela seleção, conforme o modo escolhido (só o item, linha, coluna ou tabela).
+function edTargets(spec){if(!edSel)return [];if(edSel.type==='static')return [spec.statics[edSel.key]];if(!spec.rows[edSel.i])return [];if(edMode==='row')return Object.values(spec.rows[edSel.i]);if(edMode==='col')return spec.rows.map(r=>r[edSel.f]);if(edMode==='all')return spec.rows.flatMap(r=>Object.values(r));return [spec.rows[edSel.i][edSel.f]]}
+const edIsDeleted=spec=>{const t=edTargets(spec);return !!t.length&&(edSel.type==='static'?!t[0].visible:t.every(p=>p.hidden))};
+const DEL_LABEL={item:'este item',row:'a linha inteira',col:'este campo em todas as linhas',all:'a tabela inteira'};
+function edDelete(restore){const spec=edSpec(),t=edTargets(spec);if(!t.length)return;if(edSel.type==='static')t[0].visible=!!restore;else t.forEach(p=>{if(restore)delete p.hidden;else p.hidden=true});edTouch();saveLayouts();renderEditorPanel();renderEditor();notice('layoutMsg',restore?'Item restaurado na arte.':'Item apagado da arte. Ele continua transparente na prévia: toque nele e use “Restaurar” se quiser trazê-lo de volta.')}
+function edMove(dx,dy){const spec=edSpec();if(!edSel||(!dx&&!dy))return;const targets=edTargets(spec);targets.forEach(p=>{p.x=Math.min(LAYOUT_W+200,Math.max(-200,p.x+dx));p.y=Math.min(LAYOUT_H+200,Math.max(-200,p.y+dy))});edTouch()}
+function edSyncPos(){const p=edPos(edSpec());if(!p)return;const x=$('edPanel').querySelector('[data-ed="x"]'),y=$('edPanel').querySelector('[data-ed="y"]');if(x)x.value=p.x;if(y)y.value=p.y}
+function renderEditorPanel(){const layout=ensureActiveLayout(),spec=edSpec(),box=$('edPanel');document.querySelectorAll('[data-ed-kind]').forEach(b=>b.classList.toggle('secondary',b.dataset.edKind!==edKind));const note=$('edModeNote');note.textContent='O formato da exportação está em “Automático”. Ao mexer em qualquer item, o perfil passa para “Personalizado”.';note.classList.toggle('hidden',layout.mode==='custom');
+ if(edSel&&edSel.type==='row'&&!spec.rows[edSel.i])edSel=null;
+ if(!edSel){box.innerHTML='<div class="message">Toque num item da prévia para selecionar e editar: título, logo, nome da CAMP, ou o nome, os abates e os pontos de qualquer linha.</div>';return}
+ const isStatic=edSel.type==='static',st=isStatic?spec.statics[edSel.key]:spec.fields[edSel.f],p=edPos(spec),title=isStatic?STATIC_LABEL[edSel.key]:`Linha ${edSel.i+1} · ${FIELD_LABEL[edSel.f]}`;
+ let h=`<h3>✏️ ${esc(title)}</h3>`;
+ if(!isStatic)h+=`<div class="ed-modes">${[['item','Mover só este item'],['row','Mover a linha inteira'],['col',`Mover “${FIELD_LABEL[edSel.f]}” em todas as linhas`],['all','Mover a tabela inteira']].map(([v,l])=>`<label><input type="radio" name="edMode" value="${v}" ${edMode===v?'checked':''}> ${esc(l)}</label>`).join('')}</div>`;
+ h+=`<div class="ed-grid"><div><label>Posição X</label><input type="number" data-ed="x" value="${p.x}"></div><div><label>Posição Y</label><input type="number" data-ed="y" value="${p.y}"></div></div><div class="ed-nudge"><button type="button" class="secondary" data-nudge="0,-1" aria-label="Subir">↑</button><button type="button" class="secondary" data-nudge="0,1" aria-label="Descer">↓</button><button type="button" class="secondary" data-nudge="-1,0" aria-label="Esquerda">←</button><button type="button" class="secondary" data-nudge="1,0" aria-label="Direita">→</button><select id="edStep" aria-label="Passo"><option value="1">1 px</option><option value="5" selected>5 px</option><option value="20">20 px</option></select></div>`;
+ {const del=edIsDeleted(spec),what=isStatic?'este item':DEL_LABEL[edMode]||'este item';h+=del?`<div class="ed-del"><span class="muted">🚫 Apagado da arte (${esc(what)}).</span><button type="button" class="secondary" data-ed-restore>↩️ Restaurar</button></div>`:`<div class="ed-del"><button type="button" class="danger" data-ed-delete>🗑️ Apagar ${esc(what)}</button></div>`}
+ if(!isStatic)h+='<p class="muted">O estilo abaixo vale para este campo em todas as linhas.</p>';
+ if(edSel.key==='logo')h+=`<div class="ed-grid"><div><label>Tamanho</label><input type="number" min="20" max="600" data-ed="size" value="${st.size}"></div><div><label class="ed-check"><input type="checkbox" data-ed="visible" ${st.visible?'checked':''}> Mostrar</label></div></div>`;
+ else{if('text' in st)h+=`<label>Texto</label><input data-ed="text" maxlength="80" value="${esc(st.text)}">`;
+  h+=`<div class="ed-grid"><div><label>Tamanho da letra</label><input type="number" min="8" max="300" data-ed="size" value="${st.size}"></div><div><label>Cor</label><input type="color" data-ed="color" value="${st.color}" style="padding:4px"></div><div><label>Alinhamento</label><select data-ed="align">${[['left','A partir do ponto (esquerda)'],['center','Centralizado no ponto'],['right','Terminando no ponto (direita)']].map(([v,l])=>`<option value="${v}" ${st.align===v?'selected':''}>${l}</option>`).join('')}</select></div>${'max' in st?`<div><label>Largura máxima</label><input type="number" min="40" max="1080" data-ed="max" value="${st.max}"></div>`:''}</div><div class="ed-modes"><label><input type="checkbox" data-ed="bold" ${st.bold?'checked':''}> Negrito</label><label><input type="checkbox" data-ed="visible" ${st.visible?'checked':''}> Mostrar na arte</label></div>`}
+ box.innerHTML=h}
+function renderEditorRows(){const spec=edSpec(),b=spec.bar;$('edRows').innerHTML=`<h3>Linhas da tabela</h3><div class="ed-grid"><div><label for="edCount">Quantidade de linhas</label><input id="edCount" type="number" min="1" max="20" value="${spec.rows.length}"></div><div style="align-self:end"><button type="button" class="secondary" id="edRepeat">Repetir padrão das linhas 1 e 2</button></div></div><p class="muted">Dica: arraste a linha 1 e a linha 2 para cima das linhas da sua arte (use “Mover a linha inteira”) e toque em “Repetir padrão”. As outras linhas seguem o mesmo espaçamento.</p><div class="ed-modes"><label><input type="checkbox" data-bar="visible" ${b.visible?'checked':''}> Faixa escura atrás de cada linha</label></div><div class="ed-grid"><div><label>Cor da faixa</label><input type="color" data-bar="color" value="${b.color}" style="padding:4px"></div><div><label>Transparência da faixa (%)</label><input type="number" min="0" max="100" data-bar="opacity" value="${b.opacity}"></div><div><label>Início da faixa (X)</label><input type="number" data-bar="x" value="${b.x}"></div><div><label>Largura da faixa</label><input type="number" data-bar="w" value="${b.w}"></div><div><label>Altura da faixa</label><input type="number" data-bar="h" value="${b.h}"></div></div><div class="actions"><button type="button" class="danger" id="edReset">Restaurar posições padrão desta tabela</button></div>`}
+function edSetCount(n){const spec=edSpec(),rows=spec.rows;n=edNum(n,rows.length,1,20);while(rows.length>n)rows.pop();while(rows.length<n){const a=rows[rows.length-1],b=rows[rows.length-2],r={};for(const f in a){const dx=b?a[f].x-b[f].x:0,dy=b?a[f].y-b[f].y:100;r[f]={x:a[f].x+dx,y:a[f].y+dy}}rows.push(r)}edTouch()}
+const cv=$('layoutCanvas');
+const cvPoint=e=>{const r=cv.getBoundingClientRect();return {x:(e.clientX-r.left)*LAYOUT_W/r.width,y:(e.clientY-r.top)*LAYOUT_H/r.height}};
+// No toque, aceita uma pequena margem em volta do item e escolhe o mais próximo do dedo.
+function cvHit(e,p){const exact=edHits.slice().reverse().find(h=>p.x>=h.x&&p.x<=h.x+h.w&&p.y>=h.y&&p.y<=h.y+h.h);if(exact||e.pointerType==='mouse')return exact;const tol=14*LAYOUT_W/cv.getBoundingClientRect().width;let best=null,bd=Infinity;edHits.forEach(h=>{const dx=Math.max(h.x-p.x,0,p.x-h.x-h.w),dy=Math.max(h.y-p.y,0,p.y-h.y-h.h),d=Math.hypot(dx,dy);if(d<=tol&&d<bd){bd=d;best=h}});return best}
+cv.addEventListener('pointerdown',e=>{const p=cvPoint(e),hit=cvHit(e,p);if(!hit){edSel=null;edDrag=null;renderEditorPanel();renderEditor();return}e.preventDefault();edSel=hit.type==='static'?{type:'static',key:hit.key}:{type:'row',i:hit.i,f:hit.f};edDrag={x:p.x,y:p.y,moved:false};try{cv.setPointerCapture(e.pointerId)}catch(err){}renderEditorPanel();renderEditor()});
+cv.addEventListener('pointermove',e=>{if(!edDrag)return;const p=cvPoint(e),dx=Math.round(p.x-edDrag.x),dy=Math.round(p.y-edDrag.y);if(!dx&&!dy)return;edDrag.x+=dx;edDrag.y+=dy;edDrag.moved=true;edMove(dx,dy);edSyncPos();renderEditor()});
+document.addEventListener('keydown',e=>{if((e.key!=='Delete'&&e.key!=='Backspace')||!edSel||$('layoutsPage').classList.contains('hidden')||/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)||e.target.isContentEditable)return;e.preventDefault();if(!edIsDeleted(edSpec()))edDelete(false)});
+$('edZoom').onclick=()=>{const st=$('edStage'),big=st.classList.toggle('big'),b=$('edZoom');b.textContent=big?'🔎 Reduzir':'🔍 Ampliar';b.setAttribute('aria-pressed',big);st.scrollIntoView({block:'start',behavior:'smooth'})};
+const cvEnd=()=>{if(edDrag&&edDrag.moved)saveLayouts();edDrag=null};cv.addEventListener('pointerup',cvEnd);cv.addEventListener('pointercancel',cvEnd);
+document.querySelectorAll('[data-ed-kind]').forEach(b=>b.onclick=()=>{edKind=b.dataset.edKind;edSel=null;renderEditorAll()});
+$('layoutPreviewCamp').onchange=()=>renderEditor();
+$('edPanel').addEventListener('input',e=>{const t=e.target;if(t.name==='edMode'){edMode=t.value;renderEditorPanel();renderEditor();return}const k=t.dataset.ed;if(!k||!edSel)return;const spec=edSpec(),st=edSel.type==='static'?spec.statics[edSel.key]:spec.fields[edSel.f];
+ if(k==='x'||k==='y'){const p=edPos(spec),v=Number(t.value);if(t.value===''||!Number.isFinite(v))return;edMove(k==='x'?Math.round(v)-p.x:0,k==='y'?Math.round(v)-p.y:0)}
+ else{if(k==='bold'||k==='visible')st[k]=t.checked;else if(k==='size')st.size=edNum(t.value,st.size,8,600);else if(k==='max')st.max=edNum(t.value,st.max,40,LAYOUT_W);else if(k==='color')st.color=edColor(t.value,st.color);else if(k==='align')st.align=t.value;else if(k==='text')st.text=t.value.slice(0,80);edTouch()}
+ renderEditor()});
+$('edPanel').addEventListener('change',e=>{if(e.target.dataset.ed)saveLayouts()});
+$('edPanel').addEventListener('click',e=>{if(e.target.closest('[data-ed-delete]'))return edDelete(false);if(e.target.closest('[data-ed-restore]'))return edDelete(true);const b=e.target.closest('[data-nudge]');if(!b)return;const step=Number(($('edStep')||{}).value)||5,[dx,dy]=b.dataset.nudge.split(',').map(Number);edMove(dx*step,dy*step);edSyncPos();renderEditor();saveLayouts()});
+$('edRows').addEventListener('input',e=>{const k=e.target.dataset.bar;if(!k)return;const bar=edSpec().bar,t=e.target;if(k==='visible')bar.visible=t.checked;else if(k==='color')bar.color=edColor(t.value,bar.color);else if(k==='opacity')bar.opacity=edNum(t.value,bar.opacity,0,100);else bar[k]=edNum(t.value,bar[k],k==='x'?-200:4,LAYOUT_W+200);edTouch();renderEditor()});
+$('edRows').addEventListener('change',e=>{if(e.target.id==='edCount'){edSetCount(e.target.value);e.target.value=edSpec().rows.length;renderEditorPanel();renderEditor();saveLayouts()}else if(e.target.dataset.bar)saveLayouts()});
+$('edRows').addEventListener('click',e=>{if(e.target.id==='edRepeat'){const rows=edSpec().rows;if(rows.length<2)return alert('Aumente a quantidade de linhas para pelo menos 2.');const a=rows[0],b=rows[1];for(let i=2;i<rows.length;i++)for(const f in a)rows[i][f]={x:a[f].x+(b[f].x-a[f].x)*i,y:a[f].y+(b[f].y-a[f].y)*i};edTouch();saveLayouts();renderEditorPanel();renderEditor();notice('layoutMsg','Padrão das linhas 1 e 2 repetido para as demais linhas.')}
+ else if(e.target.id==='edReset'){if(!confirm('Restaurar as posições e estilos padrão da tabela '+(edKind==='mvp'?'MVP':'de classificação')+'?'))return;const l=ensureActiveLayout();getSpec(l,edKind);l.custom[edKind]=defaultSpec(edKind,l.accent);edSel=null;saveLayouts();renderEditorAll()}});
+$('layoutMode').onchange=()=>{const l=ensureActiveLayout();l.mode=$('layoutMode').value==='custom'?'custom':'classic';saveLayouts();renderEditorPanel();notice('layoutMsg',l.mode==='custom'?'A exportação vai usar as posições do editor.':'A exportação vai usar a arte automática do sistema.')};
+['layoutBrand','layoutPrimary'].forEach(id=>$(id).addEventListener('input',()=>renderEditor()));
+
+$('layoutProfile').onchange=()=>{activeLayoutId=$('layoutProfile').value;fillLayoutForm()};
+// Lê a imagem, reduz e salva direto no perfil, sem apagar o que foi digitado no formulário.
+function readLayoutImage(input,maxW,maxH,type,apply,okMsg){const f=input.files[0];input.value='';if(!f)return;if(!/^image\//.test(f.type)){alert('Escolha uma imagem PNG ou JPG.');return}notice('layoutMsg','Carregando imagem…');const url=URL.createObjectURL(f),img=new Image();img.onload=()=>{URL.revokeObjectURL(url);const scale=Math.min(1,maxW/img.width,maxH/img.height),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));const cx=c.getContext('2d');if(type==='image/jpeg'){cx.fillStyle='#000';cx.fillRect(0,0,c.width,c.height)}cx.drawImage(img,0,0,c.width,c.height);let data=c.toDataURL(type,.85);for(let q=.75;type==='image/jpeg'&&data.length>1400000&&q>.4;q-=.1)data=c.toDataURL(type,q);if(data.length>2000000){alert('Esta imagem ficou muito grande. Use uma imagem menor.');return}apply(ensureActiveLayout(),data);saveLayouts();renderLayoutImages();renderEditor();notice('layoutMsg',okMsg)};img.onerror=()=>{URL.revokeObjectURL(url);alert('Não foi possível abrir esta imagem. Tente outro PNG ou JPG.')};img.src=url}
+$('layoutLogo').onchange=()=>readLayoutImage($('layoutLogo'),500,500,'image/png',(x,d)=>{x.logo=d;layoutLogoData=d},'Logo adicionada e salva neste perfil. Arraste-a na prévia para posicionar.');
+$('layoutBackground').onchange=()=>readLayoutImage($('layoutBackground'),1080,1920,'image/jpeg',(x,d)=>{x.backgroundImage=d},'Imagem de fundo adicionada e salva neste perfil. Agora arraste os itens da prévia para cima da sua arte.');
+$('removeLogo').onclick=()=>{if(!confirm('Remover a logo deste perfil?'))return;ensureActiveLayout().logo='';layoutLogoData='';saveLayouts();renderLayoutImages();renderEditor();notice('layoutMsg','Logo removida.')};
+$('removeBackground').onclick=()=>{if(!confirm('Remover a imagem de fundo deste perfil?'))return;ensureActiveLayout().backgroundImage='';saveLayouts();renderLayoutImages();renderEditor();notice('layoutMsg','Imagem de fundo removida.')};
+$('saveLayout').onclick=()=>{const x=readLayoutForm();const idx=layouts.findIndex(a=>a.id===x.id);if(idx>=0)layouts[idx]=x;else layouts.push(x);activeLayoutId=x.id;saveLayouts();renderLayoutProfiles();notice('layoutMsg','Nome e cores salvos! O perfil será usado nas próximas imagens de classificação e MVP.')};
+$('newLayout').onclick=()=>{const x={...baseLayout(),id:uid(),name:'Novo cliente',brand:'Novo cliente',mode:'custom'};layouts.push(x);activeLayoutId=x.id;saveLayouts();renderLayoutProfiles();notice('layoutMsg','Novo perfil criado. Envie a arte de fundo e arraste os itens para o lugar certo.')};
+$('deleteLayout').onclick=()=>{if(layouts.length<2)return alert('Mantenha pelo menos um perfil de layout.');if(!confirm('Excluir este perfil visual?'))return;layouts=layouts.filter(x=>x.id!==activeLayoutId);activeLayoutId=layouts[0].id;saveLayouts();renderLayoutProfiles();notice('layoutMsg','Perfil excluído.')};
+$('exportLayouts').onclick=()=>{try{const blob=new Blob([JSON.stringify({version:2,layouts},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='xtcup-perfis-organizadores.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);notice('layoutMsg','Perfis exportados. Compartilhe o arquivo JSON para transferi-los para outro aparelho.')}catch(e){notice('layoutMsg','Não foi possível exportar os perfis neste navegador.')}};
+$('importLayoutsBtn').onclick=()=>$('importLayoutsFile').click();$('importLayoutsFile').onchange=async()=>{const f=$('importLayoutsFile').files[0];if(!f)return;try{const raw=JSON.parse(await f.text()),incoming=Array.isArray(raw)?raw:raw.layouts;if(!Array.isArray(incoming)||!incoming.length||!incoming.every(x=>x&&typeof x.name==='string'&&typeof x.id==='string'))throw Error('invalid');if(!confirm('Importar perfis? Perfis com o mesmo ID serão substituídos.'))return;for(const item of incoming){const clean={id:item.id,name:String(item.name||'Organizador').slice(0,60),brand:String(item.brand||item.name||'Organização de XTREINOS').slice(0,60),primary:edColor(item.primary,'#211332'),accent:edColor(item.accent,'#925cff'),logo:typeof item.logo==='string'&&item.logo.startsWith('data:image/')?item.logo:'',backgroundImage:typeof item.backgroundImage==='string'&&item.backgroundImage.startsWith('data:image/')?item.backgroundImage:'',mode:item.mode==='custom'?'custom':'classic'};if(item.custom&&typeof item.custom==='object'){clean.custom={};for(const k of ['ranking','mvp'])if(item.custom[k]&&typeof item.custom[k]==='object')clean.custom[k]=item.custom[k];getSpec(clean,'ranking');getSpec(clean,'mvp')}const i=layouts.findIndex(x=>x.id===clean.id);if(i>=0)layouts[i]=clean;else layouts.push(clean)}activeLayoutId=incoming[0].id;saveLayouts();renderLayoutProfiles();notice('layoutMsg','Perfis importados com sucesso. Selecione o organizador antes de exportar as artes.')}catch(e){notice('layoutMsg','Arquivo de perfis inválido ou incompatível.')}finally{$('importLayoutsFile').value=''}};
+function render(){options('activeCamp',db.camps,'Selecione um evento');options('rankingCamp',db.camps,'Selecione um evento');options('historyCamp',db.camps,'Selecione um evento');options('mvpCamp',db.camps,'Selecione um evento');options('layoutPreviewCamp',db.camps,'Exemplo (dados fictícios)');$('teamsList').innerHTML=db.teams.length?db.teams.map(t=>{const ps=t.players||[];return `<div class="item"><div class="team-info"><b>${esc(t.name)}</b><div class="team-players">${ps.length?ps.map(p=>`<span class="pill">${esc(p)}</span>`).join(''):'<span class="muted" style="font-size:13px">Sem jogadores cadastrados</span>'}${t.extra?`<span class="pill" style="background:#22182f;border:1px dashed #58416f">Reserva: ${esc(t.extra)}</span>`:''}</div></div><div class="team-btns"><button class="secondary" data-edit-team="${t.id}">Editar</button><button class="danger" data-del-team="${t.id}">Excluir</button></div></div>`}).join(''):'<p class="muted">Nenhum time cadastrado ainda.</p>';$('campsList').innerHTML=db.camps.length?db.camps.map(c=>`<div class="item"><span>${esc(c.name)}</span><button class="danger" data-del-camp="${c.id}">Excluir</button></div>`).join(''):'<p class="muted">Nenhum evento cadastrado ainda.</p>';renderScores();renderRanking();renderHistory();renderMvp()}function campMatches(id){return db.matches.filter(m=>m.campId===id)}function syncLineup(){const camp=db.camps.find(c=>c.id===$('activeCamp').value);if(!camp||editingMatchId)return;camp.teamIds=[...$('scoreRows').querySelectorAll('.scoreline select')].map(x=>x.value).filter(Boolean);persist()}function renderQuedaBar(){const campId=$('activeCamp').value,bar=$('quedaBar');if(!campId){bar.innerHTML='';editingMatchId=null;$('quedaTitle').textContent='';$('saveMatch').textContent='Finalizar queda';$('saveMatch').disabled=false;$('deleteQueda').classList.add('hidden');return}const ms=campMatches(campId);if(editingMatchId&&!ms.some(m=>m.id===editingMatchId))editingMatchId=null;const idx=editingMatchId?ms.findIndex(m=>m.id===editingMatchId):-1,n=idx>=0?idx+1:ms.length+1,full=!editingMatchId&&ms.length>=MAX_QUEDAS;bar.innerHTML=ms.map((m,i)=>`<button type="button" class="${m.id===editingMatchId?'':'secondary'}" data-queda="${esc(m.id)}">Queda ${i+1} ✓</button>`).join('')+(ms.length<MAX_QUEDAS?`<button type="button" class="${editingMatchId?'secondary':''}" data-queda="">＋ Queda ${ms.length+1}</button>`:'');$('quedaTitle').textContent=full?`Limite de ${MAX_QUEDAS} quedas atingido nesta CAMP`:editingMatchId?`✏️ Editando a queda ${n}`:`Queda ${n} de ${MAX_QUEDAS}`;$('saveMatch').textContent=editingMatchId?`Salvar alterações da queda ${n}`:`Finalizar queda ${n}`;$('saveMatch').disabled=full;$('deleteQueda').classList.toggle('hidden',!editingMatchId)}function renderScores(){const camp=db.camps.find(c=>c.id===$('activeCamp').value);renderQuedaBar();if(!db.teams.length){$('scoreRows').innerHTML='<p class="muted">Cadastre os times na aba Times primeiro.</p>';scoreCtx='';return}const ctx=(camp?camp.id:'')+'|'+(editingMatchId||'new');let src;if(ctx!==scoreCtx){scoreCtx=ctx;const m=editingMatchId&&db.matches.find(x=>x.id===editingMatchId);if(m){src=legacyScoreRows(m)}else{scoreLegacyMvp=[];src=((camp&&camp.teamIds)||[]).filter(id=>db.teams.some(t=>t.id===id)).map(team=>({team,placement:'',players:[]}))}}else src=[...$('scoreRows').querySelectorAll('.scoreline')].map(r=>{const sel=r.querySelector('select');return {team:sel.value,teamName:sel.selectedOptions[0]?.textContent,placement:r.querySelector('[data-placement]').value,players:readPlayerKills(r),other:r.querySelector('[data-other-kills]')?.value||0}});$('scoreRows').innerHTML='';if(src.length)src.forEach(x=>addScoreRow(x));else addScoreRow()}function teamRoster(teamId,stored=[]){const t=db.teams.find(x=>x.id===teamId),list=t?[...(t.players||[]).map(name=>({name})),...(t.extra?[{name:t.extra,reserve:true}]:[])]:[];const keys=new Set(list.map(p=>p.name.toLocaleLowerCase('pt-BR')));(stored||[]).forEach(p=>{const key=String(p.name||'').toLocaleLowerCase('pt-BR');if(key&&!keys.has(key)&&(!t||Number(p.kills)>0)){keys.add(key);list.push({name:p.name})}});return list}function readPlayerKills(div){return [...div.querySelectorAll('[data-pk]')].map(i=>({name:i.dataset.pk,kills:i.value}))}function legacyScoreRows(m){const pool=(m.mvpRows||[]).map(r=>({...r}));const out=m.rows.map(r=>{if(Array.isArray(r.players))return {team:r.teamId,teamName:r.teamName,placement:r.placement,players:r.players,other:r.otherKills||0};const players=teamRoster(r.teamId).map(p=>{const key=p.name.toLocaleLowerCase('pt-BR'),idx=pool.findIndex(x=>String(x.name||'').trim().toLocaleLowerCase('pt-BR')===key);let kills=0;if(idx>=0){kills=Number(pool[idx].kills)||0;pool.splice(idx,1)}return {name:p.name,kills}});const sum=players.reduce((a,p)=>a+p.kills,0);return {team:r.teamId,teamName:r.teamName,placement:r.placement,players,other:Math.max(0,(Number(r.kills)||0)-sum)}});scoreLegacyMvp=m.rows.every(r=>Array.isArray(r.players))?[]:pool.filter(x=>String(x.name||'').trim());return out}function addScoreRow(data={}){
+ if(!db.teams.length)return;
+ const div=document.createElement('div'),rowId='score-'+uid();
+ div.className='scoreline panel';
+ div.style.padding='10px';
+ div.innerHTML=`<label for="${rowId}-team">Time</label><select id="${rowId}-team" class="teamPick"><option value="">Selecione o time</option>${data.team&&!db.teams.some(t=>t.id===data.team)?`<option value="${esc(data.team)}">${esc(data.teamName||'Time removido')}</option>`:''}${db.teams.map(t=>`<option value="${esc(t.id)}">${esc(t.name)}</option>`).join('')}</select><div class="score-details hidden"><div class="scores score-summary"><div><label for="${rowId}-placement">Colocação</label><input id="${rowId}-placement" data-placement type="number" min="1" max="20" step="1" value="${esc(data.placement??'')}" placeholder="Ex.: 1, 2 ou 3" inputmode="numeric"></div><div><label for="${rowId}-kills">Total de abates · automático</label><input id="${rowId}-kills" data-kills type="number" value="0" readonly class="kills-total" title="Soma dos abates dos titulares e do reserva" aria-describedby="${rowId}-hint"></div></div><div class="player-kills"></div><p id="${rowId}-hint" class="muted score-hint">Preencha os abates ao lado de cada jogador. A soma entra no total do time e no ranking MVP ao salvar a queda, sem lançamento separado.</p><div class="muted pointsLine" role="status" aria-live="polite">Pontos: —</div></div><button type="button" class="secondary removeRow" style="margin-top:8px;min-height:38px">Remover time da queda</button>`;
+ $('scoreRows').appendChild(div);
+ const sel=div.querySelector('select'),placementInput=div.querySelector('[data-placement]');
+ sel.value=data.team||'';
+ const update=()=>{
+  div.querySelector('.score-details').classList.toggle('hidden',!sel.value);
+  const raw=placementInput.value,placement=Number(raw),validPlacement=raw!==''&&Number.isInteger(placement)&&placement>=1&&placement<=20;
+  placementInput.setAttribute('aria-invalid',String(raw!==''&&!validPlacement));
+  let kills=0,validKills=true;
+  div.querySelectorAll('[data-pk],[data-other-kills]').forEach(input=>{
+   const value=Number(input.value||0),valid=Number.isInteger(value)&&value>=0&&value<=99&&!input.validity.badInput;
+   input.setAttribute('aria-invalid',String(!valid));
+   if(valid)kills+=value;
+   else validKills=false;
+  });
+  div.querySelector('[data-kills]').value=validKills?kills:'';
+  div.querySelector('.pointsLine').textContent=!validKills?'Confira os abates: use números inteiros de 0 a 99.':!validPlacement?(raw===''?'Pontos: informe a colocação.':'Confira a colocação: use um número inteiro de 1 a 20.'):`Pontos: ${points(placement)} colocação + ${kills} abates = ${points(placement)+kills}`;
+ };
+ const renderPlayers=(stored=[],other=0)=>{
+  const previous=new Map(stored.map(player=>[String(player.name||'').toLocaleLowerCase('pt-BR'),player.kills]));
+  const roster=sel.value?teamRoster(sel.value,stored):[];
+  div.querySelector('.player-kills').innerHTML=roster.length?`<h3>Abates por jogador</h3><div class="pk-grid">${roster.map(player=>`<label class="pk"><span class="pk-name">${esc(player.name)}${player.reserve?' <small>(reserva)</small>':''}</span><input data-pk="${esc(player.name)}" type="number" min="0" max="99" step="1" value="${esc(previous.get(player.name.toLocaleLowerCase('pt-BR'))??0)}" inputmode="numeric" aria-label="Abates de ${esc(player.name)}"></label>`).join('')}</div>`:'<p class="muted" style="margin:4px 0">Cadastre os jogadores deste time na aba Times.</p>';
+  if(Number(other)>0)div.querySelector('.player-kills').insertAdjacentHTML('beforeend',`<p class="muted score-hint">Este registo antigo contém abates sem jogador identificado. Distribua-os pelos jogadores e reduza o valor abaixo para não contar duas vezes. Apenas os abates identificados entram no MVP.</p><label class="pk pk-other"><span class="pk-name">Abates antigos sem jogador</span><input data-other-kills type="number" min="0" max="99" step="1" value="${esc(other)}" inputmode="numeric"></label>`);
+  div.querySelectorAll('.player-kills input').forEach(input=>{
+   input.addEventListener('input',update);
+   input.addEventListener('focus',()=>input.select());
+  });
+ };
+ renderPlayers(data.players,data.other);
+ placementInput.addEventListener('input',update);
+ sel.addEventListener('change',()=>{
+  placementInput.value='';
+  renderPlayers();
+  update();
+  syncLineup();
+ });
+ div.querySelector('.removeRow').onclick=()=>{div.remove();syncLineup()};
+ update();
+}
+$('addScoreRow').onclick=()=>{addScoreRow();syncLineup()};function resetTeamForm(){$('teamForm').reset();$('teamEditId').value='';$('teamSubmit').textContent='Cadastrar time';$('teamCancelEdit').classList.add('hidden')}$('teamCancelEdit').onclick=resetTeamForm;$('teamForm').onsubmit=e=>{e.preventDefault();const editId=$('teamEditId').value,name=$('teamName').value.trim();if(!name)return;const players=[...document.querySelectorAll('[data-team-player]')].map(i=>i.value.trim());if(players.some(p=>!p))return alert('Informe os 4 jogadores obrigatórios do time.');const extra=$('teamExtra').value.trim();const all=[...players,extra].filter(Boolean).map(p=>p.toLocaleLowerCase('pt-BR'));if(new Set(all).size!==all.length)return alert('Não repita o mesmo jogador no time.');if(db.teams.some(t=>t.id!==editId&&t.name.toLowerCase()===name.toLowerCase()))return alert('Esse time já está cadastrado.');if(editId){const t=db.teams.find(x=>x.id===editId);if(t){t.name=name;t.players=players;t.extra=extra;db.matches.forEach(m=>m.rows.forEach(r=>{if(r.teamId===editId)r.teamName=name}))}}else db.teams.push({id:uid(),name,players,extra});persist();resetTeamForm();render()};$('campForm').onsubmit=e=>{e.preventDefault();const name=$('campName').value.trim();if(!name)return;if(db.camps.some(c=>c.name.toLowerCase()===name.toLowerCase()))return alert('Essa CAMP já existe.');db.camps.push({id:uid(),name,createdAt:new Date().toISOString()});persist();$('campName').value='';render()};document.addEventListener('click',e=>{const ed=e.target.closest('[data-edit-team]');if(ed){const t=db.teams.find(x=>x.id===ed.dataset.editTeam);if(t){$('teamEditId').value=t.id;$('teamName').value=t.name;[...document.querySelectorAll('[data-team-player]')].forEach((i,n)=>i.value=(t.players||[])[n]||'');$('teamExtra').value=t.extra||'';$('teamSubmit').textContent='Salvar alterações';$('teamCancelEdit').classList.remove('hidden');$('teamForm').scrollIntoView({behavior:'smooth'})}return}const t=e.target.closest('[data-del-team]');if(t){const id=t.dataset.delTeam,team=db.teams.find(x=>x.id===id);if(!team)return;const used=db.matches.some(m=>m.rows.some(r=>r.teamId===id));if(confirm(`Tem certeza que deseja excluir o time "${team.name}"?${used?'\n\nEle aparece em partidas salvas: os resultados continuam no ranking e no histórico com o nome atual.':''}\n\nEsta ação não pode ser desfeita.`)){db.teams=db.teams.filter(x=>x.id!==id);if($('teamEditId').value===id)resetTeamForm();persist();render()}}const c=e.target.closest('[data-del-camp]');if(c&&confirm('Excluir esta CAMP e todo o histórico dela?')){db.camps=db.camps.filter(x=>x.id!==c.dataset.delCamp);db.matches=db.matches.filter(m=>m.campId!==c.dataset.delCamp);persist();render()}});$('saveMatch').onclick=()=>{const campId=$('activeCamp').value;if(!campId)return notice('scoreMsg','Crie e selecione uma CAMP antes de salvar.');const lines=[...$('scoreRows').querySelectorAll('.scoreline')];if(!lines.length)return notice('scoreMsg','Adicione pelo menos um time.');const rows=[];for(const line of lines){const teamId=line.querySelector('select').value,placement=Number(line.querySelector('[data-placement]').value),players=readPlayerKills(line).map(p=>({name:p.name,kills:Number(p.kills||0)})),otherKills=Number(line.querySelector('[data-other-kills]')?.value||0);if(!teamId||!Number.isInteger(placement)||placement<1||placement>20)return notice('scoreMsg','Confira os times e informe a colocação (1 a 20) de cada time.');if([...players.map(p=>p.kills),otherKills].some(k=>!Number.isInteger(k)||k<0||k>99))return notice('scoreMsg','Confira os abates de cada jogador (0 a 99).');const kills=players.reduce((a,p)=>a+p.kills,0)+otherKills;if(rows.some(r=>r.teamId===teamId))return notice('scoreMsg','Não repita o mesmo time na mesma partida.');rows.push({teamId,teamName:db.teams.find(t=>t.id===teamId)?.name||'Time removido',placement,kills,placementPoints:points(placement),total:points(placement)+kills,players,...(otherKills?{otherKills}:{})})}const mvpRows=[...rows.flatMap(r=>r.players.filter(p=>p.kills>0).map(p=>({name:p.name,kills:p.kills}))),...(editingMatchId?scoreLegacyMvp:[])];const ms=campMatches(campId);if(editingMatchId){const m=db.matches.find(x=>x.id===editingMatchId),n=ms.indexOf(m)+1;if(m){m.rows=rows;m.mvpRows=mvpRows;m.updatedAt=new Date().toISOString()}editingMatchId=null;scoreCtx='';persist();render();return notice('scoreMsg',`Queda ${n} atualizada! Rankings de times e MVP recalculados.`)}if(ms.length>=MAX_QUEDAS)return notice('scoreMsg',`Esta CAMP já tem ${MAX_QUEDAS} quedas. Exclua ou edite uma queda existente.`);db.matches.push({id:uid(),campId,createdAt:new Date().toISOString(),rows,mvpRows});const camp=db.camps.find(c=>c.id===campId);if(camp)camp.teamIds=rows.map(r=>r.teamId);scoreCtx='';persist();render();const n=ms.length+1;notice('scoreMsg',n<MAX_QUEDAS?`Queda ${n} finalizada! Os times foram mantidos para a queda ${n+1} com colocação e abates zerados.`:`Queda ${n} finalizada! Esta CAMP atingiu o limite de ${MAX_QUEDAS} quedas.`)};$('deleteQueda').onclick=()=>{const campId=$('activeCamp').value,ms=campMatches(campId),n=ms.findIndex(m=>m.id===editingMatchId)+1;if(!n||!confirm(`Tem certeza que deseja excluir a queda ${n}? As quedas seguintes serão renumeradas e o ranking recalculado.`))return;db.matches=db.matches.filter(m=>m.id!==editingMatchId);editingMatchId=null;scoreCtx='';persist();render();notice('scoreMsg',`Queda ${n} excluída.`)};$('quedaBar').addEventListener('click',e=>{const b=e.target.closest('[data-queda]');if(!b)return;editingMatchId=b.dataset.queda||null;$('scoreMsg').classList.add('hidden');renderScores()});$('rankingCamp').onchange=renderRanking;$('historyCamp').onchange=renderHistory;$('mvpCamp').onchange=renderMvp;$('activeCamp').onchange=()=>{editingMatchId=null;renderScores()};function getRankingRows(id){const totals={};db.matches.filter(m=>m.campId===id).forEach(m=>m.rows.forEach(r=>{const x=totals[r.teamId]||(totals[r.teamId]={name:r.teamName,points:0,kills:0,played:0});x.points+=r.total;x.kills+=r.kills;x.played++}));return Object.values(totals).sort((a,b)=>b.points-a.points||b.kills-a.kills)}
+function renderRanking(){const id=$('rankingCamp').value;if(!id){$('ranking').innerHTML='<p class="muted">Cadastre um evento para ver o ranking.</p>';return}const rows=getRankingRows(id);$('ranking').innerHTML=rows.length?`<div class="tablewrap"><table><thead><tr><th>#</th><th>Time</th><th class="num">Abates</th><th class="num">Pontos</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.name)}</td><td class="num">${r.kills}</td><td class="num"><b>${r.points}</b></td></tr>`).join('')}</tbody></table></div>`:'<p class="muted">Ainda não há partidas nesta CAMP.</p>'}async function drawExport(kind){
+ const isMvp=kind==='mvp',campId=$(isMvp?'mvpCamp':'rankingCamp').value;
+ if(!campId){alert('Selecione uma CAMP primeiro.');return}
+ const camp=db.camps.find(c=>c.id===campId);let rows=isMvp?getMvpRows(campId):getRankingRows(campId);
+ // Use the exact rows currently shown in the Ranking table when available, preventing a mismatch in the exported CAMP.
+ if(!isMvp){
+   const visibleRows=Array.from(document.querySelectorAll('#ranking tbody tr')).map(tr=>{
+     const cells=tr.querySelectorAll('td');
+     if(cells.length<4)return null;
+     return {name:(cells[1].innerText||cells[1].textContent||'').trim(),kills:Number((cells[2].innerText||cells[2].textContent||'').replace(/[^0-9-]/g,''))||0,points:Number((cells[3].innerText||cells[3].textContent||'').replace(/[^0-9-]/g,''))||0};
+   }).filter(r=>r&&r.name);
+   if(visibleRows.length)rows=visibleRows;
+ }
+ if(!rows.length){alert(isMvp?'Registre os nicks e abates individuais antes de baixar a tabela MVP.':'Salve pelo menos uma partida antes de baixar a tabela.');return}
+ const layout={...currentLayout(),...readLayoutForm(),logo:currentLayout().logo||'',backgroundImage:currentLayout().backgroundImage||''},canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+ const W=1080,H=1920,shown=rows.slice(0,isMvp?5:20),accent=layout.accent||'#ff2638',primary=layout.primary||'#100b12';
+ canvas.width=W;canvas.height=H;
+ const loadImage=src=>new Promise(resolve=>{if(!src)return resolve(null);const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>resolve(null);im.src=src});
+ if(layout.mode==='custom'){const spec=getSpec(ensureActiveLayout(),kind);await drawCustom(ctx,layout,spec,kind,rows,camp?.name||'CAMP',null)}else{
+ const bg=await loadImage(layout.backgroundImage);
+ if(bg){const scale=Math.max(W/bg.width,H/bg.height),w=bg.width*scale,h=bg.height*scale;ctx.drawImage(bg,(W-w)/2,(H-h)/2,w,h);ctx.fillStyle='rgba(5,3,8,.22)';ctx.fillRect(0,0,W,H)}
+ else {const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#08080c');g.addColorStop(.45,primary);g.addColorStop(1,'#09070b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);for(let i=0;i<26;i++){const y=(i*113)%H;ctx.beginPath();ctx.moveTo(0,y+90);ctx.lineTo(W,Math.max(0,y-170));ctx.lineTo(W,Math.max(0,y-145));ctx.lineTo(0,y+115);ctx.closePath();ctx.fillStyle=i%3===0?'rgba(255,25,45,.22)':'rgba(180,10,30,.09)';ctx.fill()}}
+ // Premium frame and strong header
+ ctx.strokeStyle=accent;ctx.lineWidth=5;roundRect(ctx,18,18,W-36,H-36,30,false);ctx.stroke();ctx.strokeStyle='rgba(255,255,255,.72)';ctx.lineWidth=2;roundRect(ctx,32,32,W-64,H-64,25,false);ctx.stroke();
+ // Header panel hides busy text/art from uploaded backgrounds so the data remains readable
+ ctx.fillStyle=bg?'rgba(7,6,11,.62)':'rgba(7,6,11,.90)';roundRect(ctx,48,48,W-96,360,28,true);ctx.strokeStyle=accent;ctx.lineWidth=2;roundRect(ctx,48,48,W-96,360,28,false);ctx.stroke();
+ const logo=await loadImage(layout.logo);if(logo){const max=150,scale=Math.min(max/logo.width,max/logo.height);ctx.drawImage(logo,78,78,logo.width*scale,logo.height*scale)}
+ ctx.textAlign='center';ctx.fillStyle='#f5f5f7';ctx.font='italic 24px Arial';ctx.fillText('OS MELHORES SE ENCONTRAM AQUI',W/2,105);
+ ctx.fillStyle=accent;ctx.font='900 76px Arial';ctx.shadowColor=accent;ctx.shadowBlur=15;ctx.fillText(isMvp?'RANKING MVP':'CLASSIFICAÇÃO',W/2,202);ctx.shadowBlur=0;
+ ctx.fillStyle='#fff';ctx.font='italic 900 58px Arial';let brand=(layout.brand||layout.name||'Organização de XTREINOS').toUpperCase();while(ctx.measureText(brand).width>850&&brand.length>8)brand=brand.slice(0,-2)+'…';ctx.fillText(brand,W/2,278);
+ ctx.fillStyle='#cfcbd5';ctx.font='bold 23px Arial';ctx.fillText('FREE FIRE  •  '+(isMvp?'DESTAQUE INDIVIDUAL':'BATTLE ROYALE'),W/2,323);
+ // CAMP label
+ ctx.fillStyle=bg?'rgba(0,0,0,.70)':'rgba(0,0,0,.86)';roundRect(ctx,70,350,W-140,76,16,true);ctx.strokeStyle=accent;ctx.lineWidth=2;roundRect(ctx,70,350,W-140,76,16,false);ctx.stroke();ctx.fillStyle='#ffbf38';ctx.font='bold 20px Arial';ctx.textAlign='left';ctx.fillText('CAMP',96,379);ctx.fillStyle='#fff';ctx.font='bold 29px Arial';let campName=camp?.name||'CAMP';while(ctx.measureText(campName).width>760&&campName.length>8)campName=campName.slice(0,-2)+'…';ctx.fillText(campName,96,410);
+ // Dedicated opaque table area, so an uploaded artwork's old table never bleeds through
+ const x=52,w=W-104,tableTop=465,footerY=1772,available=footerY-tableTop,headH=66,gap=isMvp?16:5,rowH=isMvp?Math.min(220,Math.floor((available-headH-12)/Math.max(1,shown.length)-gap)):Math.min(59,Math.floor((available-headH-12)/Math.max(1,shown.length)-gap));
+ ctx.fillStyle=bg?'rgba(5,4,8,.45)':'#050408';roundRect(ctx,x-10,tableTop-10,w+20,footerY-tableTop+22,22,true);ctx.strokeStyle='rgba(255,255,255,.20)';ctx.lineWidth=2;roundRect(ctx,x-10,tableTop-10,w+20,footerY-tableTop+22,22,false);ctx.stroke();
+ const colRank=x+65,colName=x+170,colKills=x+w-(isMvp?48:170),colTotal=x+w-30;
+ ctx.fillStyle=accent;roundRect(ctx,x,tableTop,w,headH,12,true);ctx.fillStyle='#fff';ctx.font='bold 24px Arial';ctx.textAlign='left';ctx.fillText('#',x+24,tableTop+42);ctx.fillText(isMvp?'JOGADOR':'TIME',colName,tableTop+42);ctx.textAlign='right';if(isMvp)ctx.fillText('ABATES',colKills,tableTop+42);else{ctx.fillText('KILLS',colKills,tableTop+42);ctx.fillText('TOTAL',colTotal,tableTop+42)}
+ let y=tableTop+headH+8;
+ for(let i=0;i<shown.length;i++){const r=shown[i],rh=rowH;ctx.globalAlpha=bg?.82:1;ctx.fillStyle=isMvp?(i===0?'rgba(70,48,12,.98)':i===1?'rgba(48,50,61,.98)':i===2?'rgba(62,34,23,.98)':'rgba(18,15,24,.98)'):(i===0?'rgba(123,82,8,.98)':i===1?'rgba(120,130,145,.22)':i===2?'rgba(145,62,20,.28)':(i%2?'rgba(22,19,26,.98)':'rgba(12,11,16,.98)'));roundRect(ctx,x,y,w,rh,isMvp?18:9,true);ctx.globalAlpha=1;ctx.strokeStyle=i===0?'#ffcf4b':i===1&&isMvp?'#aeb8cc':i===2&&isMvp?'#c27b52':'rgba(255,255,255,.14)';ctx.lineWidth=i<3&&isMvp?2:i===0?2:1;roundRect(ctx,x,y,w,rh,9,false);ctx.stroke();
+   ctx.textAlign='left';ctx.fillStyle=i===0?'#ffdc66':i===1&&isMvp?'#d7deec':i===2&&isMvp?'#e0a27a':'#fff';ctx.font=`900 ${isMvp?42:(rh<48?20:25)}px Arial`;ctx.fillText(isMvp?(i===0?'👑':i===1?'🥈':i===2?'🥉':String(i+1).padStart(2,'0')):(i===0?'♛':String(i+1)),x+24,y+rh*(isMvp?.57:.64));
+   ctx.font=`${isMvp?'900':'bold'} ${isMvp?36:(rh<48?20:25)}px Arial`;let name=String(r.name||r.teamName||'—');const maxName=isMvp?colKills-colName-48:colKills-colName-58;while(ctx.measureText(name).width>maxName&&name.length>4)name=name.slice(0,-2)+'…';ctx.fillText(name,colName,y+rh*(isMvp?.48:.64));
+   if(isMvp){ctx.textAlign='left';ctx.fillStyle='#bfb3cc';ctx.font='bold 19px Arial';ctx.fillText('DESTAQUE INDIVIDUAL',colName,y+rh*.68);ctx.textAlign='right';ctx.fillStyle=i===0?'#ffdc66':'#fff';ctx.font='900 56px Arial';ctx.fillText(String(r.kills||0),colKills,y+rh*.54);ctx.fillStyle=accent;ctx.font='bold 17px Arial';ctx.fillText('ABATES',colKills,y+rh*.72)}else{ctx.textAlign='right';ctx.font=`bold ${rh<48?22:27}px Arial`;if(isMvp){ctx.fillStyle=i===0?'#ffdc66':'#fff';ctx.fillText(String(r.kills||0),colKills,y+rh*.64)}else{ctx.fillStyle='#eee';ctx.fillText(String(r.kills||0),colKills,y+rh*.64);ctx.fillStyle=i===0?'#ffdc66':'#fff';ctx.font=`900 ${rh<48?22:28}px Arial`;ctx.fillText(String(r.points||0),colTotal,y+rh*.64)} }y+=rh+gap;
+ }
+ if(rows.length>shown.length){ctx.textAlign='center';ctx.fillStyle='#fff';ctx.font='20px Arial';ctx.fillText(`Exibindo ${shown.length} de ${rows.length} registros`,W/2,y+8)}
+ ctx.fillStyle=bg?'rgba(5,4,8,.72)':'rgba(5,4,8,.94)';roundRect(ctx,60,footerY+30,W-120,70,18,true);ctx.strokeStyle=accent;ctx.lineWidth=2;roundRect(ctx,60,footerY+30,W-120,70,18,false);ctx.stroke();ctx.textAlign='center';ctx.fillStyle=accent;ctx.font='italic 900 26px Arial';ctx.fillText(isMvp?'O CRAQUE DA CAMP!':'JOGUE  •  COMPITA  •  EVOLUA',W/2,footerY+60);ctx.fillStyle='#f4f4f5';ctx.font='bold 19px Arial';ctx.fillText('ORGANIZAÇÃO: '+(layout.brand||layout.name||'Organização de XTREINOS')+(isMvp?'  •  MVP':'  •  APURAÇÃO OFICIAL'),W/2,footerY+88);
+ }
+ const safeName=(isMvp?'MVP-':'CLASSIFICACAO-')+String(camp?.name||'CAMP').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9_-]/gi,'-')+'.png';
+ const saveImageFallback=()=>{
+   try{
+     const dataUrl=canvas.toDataURL('image/png');
+     const opened=window.open(dataUrl,'_blank');
+     if(!opened){
+       const link=document.createElement('a');
+       link.href=dataUrl; link.download=safeName; link.target='_blank'; link.rel='noopener';
+       document.body.appendChild(link); link.click(); link.remove();
+     }
+     alert('A imagem foi gerada. Se ela abriu em outra aba, pressione a imagem e escolha “Fazer download” ou “Salvar imagem”.');
+   }catch(err){
+     console.error('export PNG fallback:',err);
+     alert('Não foi possível gerar a imagem PNG. Feche o arquivo, abra-o diretamente no Google Chrome e tente novamente. Se continuar, envie a mensagem exata do erro.');
+   }
+ };
+ try{
+   if(typeof canvas.toBlob==='function'){
+     canvas.toBlob(blob=>{
+       if(!blob){saveImageFallback();return;}
+       try{
+         const url=URL.createObjectURL(blob);
+         const link=document.createElement('a');
+         link.href=url; link.download=safeName; link.style.display='none';
+         document.body.appendChild(link); link.click(); link.remove();
+         setTimeout(()=>URL.revokeObjectURL(url),30000);
+         setTimeout(()=>alert('Se o download não aparecer, verifique a pasta Downloads ou permita downloads no navegador.'),300);
+       }catch(err){console.error('blob download:',err);saveImageFallback();}
+     },'image/png');
+   }else{saveImageFallback();}
+ }catch(err){console.error('canvas export:',err);saveImageFallback();}
+}
+$('downloadRanking').onclick=()=>drawExport('ranking').catch(err=>{console.error('ranking export:',err);alert('Erro ao montar a imagem da classificação: '+(err&&err.message?err.message:'falha inesperada')+'. Tente abrir este arquivo no Google Chrome.');});
+function roundRect(ctx,x,y,w,h,r,fill=true){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);if(fill)ctx.fill()}
+function getMvpRows(id){const totals={};db.matches.filter(m=>m.campId===id).forEach(m=>(m.mvpRows||[]).forEach(r=>{const key=r.name.trim().toLocaleLowerCase('pt-BR');if(!key)return;const x=totals[key]||(totals[key]={name:r.name.trim(),kills:0,matches:0});x.kills+=Number(r.kills)||0;x.matches++}));return Object.values(totals).sort((a,b)=>b.kills-a.kills||a.name.localeCompare(b.name,'pt-BR'))}function renderMvp(){const id=$('mvpCamp').value;if(!id){$('mvpRanking').innerHTML='<p class="muted">Selecione um evento para ver o ranking MVP.</p>';return}const rows=getMvpRows(id);$('mvpRanking').innerHTML=rows.length?`<p class="muted">TOP 5 · jogadores com mais abates acumulados nesta CAMP.</p><div class="mvp-board">${rows.slice(0,5).map((r,i)=>`<div class="mvp-card"><div class="mvp-rank">${i===0?'👑':i===1?'🥈':i===2?'🥉':String(i+1).padStart(2,'0')}</div><div><div class="mvp-nick">${esc(r.name)}</div><div class="mvp-sub">${r.matches} ${r.matches===1?'registro':'registros'} · posição ${i+1}</div></div><div class="mvp-kills">${r.kills}<small>ABATES</small></div></div>`).join('')}</div>`:'<div class="mvp-empty">👑<h3>Nenhum MVP registrado</h3>Adicione o nick e os abates individuais ao registrar uma partida.</div>'} $('downloadMvp').onclick=()=>drawExport('mvp').catch(err=>{console.error('MVP export:',err);alert('Erro ao montar a imagem MVP: '+(err&&err.message?err.message:'falha inesperada')+'. Tente abrir este arquivo no Google Chrome.');});function renderHistory(){const id=$('historyCamp').value;if(!id){$('history').innerHTML='<p class="muted">Selecione um evento.</p>';return}const ms=db.matches.filter(m=>m.campId===id).slice().reverse();$('history').innerHTML=ms.length?ms.map((m,i)=>`<div class="panel"><b>Queda ${ms.length-i}</b><div class="muted">${new Date(m.createdAt).toLocaleString('pt-BR')}</div><div class="tablewrap"><table><thead><tr><th>Time</th><th>Coloc.</th><th>Abates</th><th>Pontos</th></tr></thead><tbody>${m.rows.slice().sort((a,b)=>a.placement-b.placement).map(r=>`<tr><td>${esc(r.teamName)}</td><td>${r.placement}º</td><td>${r.kills}</td><td><b>${r.total}</b></td></tr>`).join('')}</tbody></table></div><button class="danger" data-del-match="${m.id}" style="margin-top:10px">Excluir partida</button></div>`).join(''):'<p class="muted">Nenhuma partida salva nesta CAMP.</p>'}document.addEventListener('click',e=>{const b=e.target.closest('[data-del-match]');if(b&&confirm('Excluir esta partida?')){db.matches=db.matches.filter(m=>m.id!==b.dataset.delMatch);persist();render()}});document.querySelectorAll('[data-page]').forEach(b=>b.onclick=()=>{const page=b.dataset.page;['score','teams','camps','ranking','history','mvp','layouts','backup'].forEach(p=>$(p+'Page').classList.toggle('hidden',p!==page));document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('secondary',x!==b));if(page==='score')renderScores();if(page==='ranking')renderRanking();if(page==='history')renderHistory();if(page==='mvp')renderMvp();if(page==='layouts')renderEditorAll();window.scrollTo({top:0,behavior:'smooth'})});$('exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='xtcup-backup.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);notice('backupMsg','Backup exportado. Guarde o arquivo em local seguro.')};$('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=async()=>{const f=$('importFile').files[0];if(!f)return;try{const x=JSON.parse(await f.text());if(!Array.isArray(x.teams)||!Array.isArray(x.camps)||!Array.isArray(x.matches))throw Error();if(!confirm('Importar backup e substituir os dados atuais?'))return;db=x;persist();render();notice('backupMsg','Backup importado com sucesso.')}catch(e){notice('backupMsg','Arquivo inválido. Selecione um backup exportado pelo sistema.')}finally{$('importFile').value=''}};$('logoutBtn').onclick=async()=>{clearTimeout(syncTimer);try{await saveCloudNow()}catch(e){console.error(e)}const t=userToken;setUserToken('');if(t)api('/api/auth/logout',{method:'POST',token:t}).catch(()=>{});cloudReady=false;activeUser=null;db={teams:[],camps:[],matches:[]};layouts=[];auth$('appMain').classList.add('hidden');auth$('authGate').classList.remove('hidden');auth$('adminArea').classList.add('hidden');auth$('authUserArea').classList.remove('hidden');auth$('loginForm').reset();setMode('login')};restoreSession();})();
+</script></body></html>
